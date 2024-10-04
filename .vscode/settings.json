@@ -1,0 +1,7 @@
+{
+    "java.project.sourcePaths": ["chanstation-ejb/src","chanstation-war/src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar"
+    ]
+}
