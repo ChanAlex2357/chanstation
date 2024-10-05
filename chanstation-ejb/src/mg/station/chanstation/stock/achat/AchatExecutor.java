@@ -63,7 +63,7 @@ public class AchatExecutor implements AchatExecutorSignature{
     }
     public FactureFournisseurDetails[] genererFactureFille(AchatArgs achatArgs,Connection connection) throws Exception {
         Cuve cuve = ((Cuve[]) CGenUtil.rechercher(new Cuve(),null,null," and id_cuve='"+achatArgs.getId_cuve()+"'"))[0];
-        cuve.setId(achatArgs.getId_cuve());
+        cuve.setId_cuve(achatArgs.getId_cuve());
         System.out.println("Cuve N°:"+cuve.getId_cuve());
         Carburant carburant = cuve.getCarburantDetails(connection);
         FactureFournisseurDetails details = new FactureFournisseurDetails();

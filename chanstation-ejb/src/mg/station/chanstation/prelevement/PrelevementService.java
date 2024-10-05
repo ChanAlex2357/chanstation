@@ -28,15 +28,15 @@ public class PrelevementService implements PrelevementSignature{
             prelevement.construirePK(connection);
 
             MvtArgent mvtArgent = new VenteService();
-            MvtDTO mvtDTO = new MvtDTO(prelevement.getPompe(connection).getId(), 1, 1 , prelevement.getDaty());
+            MvtDTO mvtDTO = new MvtDTO(prelevement.getPompe(connection).getId_pompe(), 1, 1 , prelevement.getDaty());
             FactureClient factureClient = null;
             PrelevementLocal prelevementLocal = EjbClientGetter.getPrelevementEjbService();
             prelevement.Prelevement prelevement1 = getPrelevementForGallois(prelevement);
 
             Prelevement prelAnt = prelevement.getPrelevementAnterieur(connection);
             if (prelAnt != null) {
-                prelevement.setIdPrelevementAnterieur(prelAnt.getId());
-                prelevement1.setIdPrelevementAnterieur(prelAnt.getId());
+                prelevement.setId_prelevement_anterieure(prelAnt.getId_prelevement());
+                prelevement1.setIdPrelevementAnterieur(prelAnt.getId_prelevement());
             }
 
             System.out.println("Hatreto izy dia mandeha");
@@ -45,18 +45,18 @@ public class PrelevementService implements PrelevementSignature{
 
             if (prelevement.isVente(connection)){
 
-                System.out.println("ANT ANT ANT"+prelAnt.getQte());
-                double mvt = prelevement.getCompteur() - prelAnt.getQte();
-                System.out.println(prelAnt.getId());
+                System.out.println("ANT ANT ANT"+prelAnt.getCompteur());
+                double mvt = prelevement.getCompteur() - prelAnt.getCompteur();
+                System.out.println(prelAnt.getId_prelevement());
                 mvtDTO.setQte(mvt);
                 mvtArgent.makeMvtArgent(mvtDTO,connection);
 
-                System.out.println("ID PRELEVEMENT:"+prelevement.getId());
+                System.out.println("ID PRELEVEMENT:"+prelevement.getId_prelevement());
 
                 prelevementLocal.generateAndPersistVenteRemote(prelevement1,"dg",c1);
 
                 double qteAnt = 0;
-                qteAnt = prelAnt.getQte();
+                qteAnt = prelAnt.getCompteur();
                 factureClient = new FactureClient(prelAnt,prelevement,connection);
             }
 //            connection.commit();
@@ -82,14 +82,14 @@ public class PrelevementService implements PrelevementSignature{
 
     private static prelevement.Prelevement getPrelevementForGallois(Prelevement prelevement) {
         prelevement.Prelevement prelevement1 = new prelevement.Prelevement();
-        prelevement1.setId(prelevement.getId());
+        prelevement1.setId(prelevement.getId_prelevement());
         prelevement1.setCompteur(prelevement.getCompteur());
         prelevement1.setDaty(prelevement.getDaty());
         prelevement1.setDesignation("Prelevement du "+prelevement.getDaty().toString());
-        prelevement1.setIdPompe(prelevement.getIdPompe());
-        prelevement1.setIdPompiste(Integer.parseInt(prelevement.getIdUtilisateur()));
+        prelevement1.setIdPompe(prelevement.getId_pompe());
+        prelevement1.setIdPompiste(Integer.parseInt(prelevement.getId_pompiste()));
         prelevement1.setHeure(prelevement.getHeure());
-        prelevement1.setIdPrelevementAnterieur(prelevement.getIdPrelevementAnterieur());
+        prelevement1.setIdPrelevementAnterieur(prelevement.getId_prelevement_anterieure());
         return prelevement1;
     }
 

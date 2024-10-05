@@ -20,26 +20,26 @@ public class DataGenerator {
         Connection c1 = new UtilDB().GetConn("gallois","gallois");
         try {
             TypeCarburant typeCarburant = generateTypeCarburant(c,"Essence");
-            Carburant carburant1 = generateCarburant(c,"SP95", typecarburant.getId_carburant(), 4900,5900);
-            Carburant carburant2 = generateCarburant(c,"SP98", typecarburant.getId_carburant(), 5100,6000);
+            Carburant carburant1 = generateCarburant(c,"SP95", typeCarburant.getId_type_carburant(), 4900,5900);
+            Carburant carburant2 = generateCarburant(c,"SP98", typeCarburant.getId_type_carburant(), 5100,6000);
 
 
-            Cuve cuve1 = generateCuve(c,100000,"GALANA Andoharanofotsy",carburant1.getId());
+            Cuve cuve1 = generateCuve(c,100000,"GALANA Andoharanofotsy",carburant1.getId_carburant());
             Magasin magasin = new Magasin();
-            magasin.setId(cuve1.getId());
+            magasin.setId(cuve1.getId_cuve());
             magasin.setDesce("");
             magasin.setIdTypeMagasin("TYPMG000001");
             magasin.setIdProduit("");
-            magasin.setVal(cuve1.getLabel());
+            magasin.setVal(cuve1.getNom());
 
-            Cuve cuve2 = generateCuve(c,100000,"GALANA SabNam",carburant2.getId());
+            Cuve cuve2 = generateCuve(c,100000,"GALANA SabNam",carburant2.getId_carburant());
 
             Magasin magasin2 = new Magasin();
-            magasin2.setId(cuve2.getId());
+            magasin2.setId(cuve2.getId_cuve());
             magasin2.setDesce("");
             magasin2.setIdTypeMagasin("TYPMG000001");
             magasin2.setIdProduit("");
-            magasin2.setVal(cuve2.getLabel());
+            magasin2.setVal(cuve2.getNom());
 
             MagasinLocalEJB magasinLocalEJB = EjbClientGetter.getMagasinEjbService();
             magasinLocalEJB.saveMagasin(magasin);
@@ -50,31 +50,31 @@ public class DataGenerator {
 
 
 
-            Pompe pompe = generatePompe(c,"Pompe 1",cuve1.getId());
-            Pompe pompe1 = generatePompe(c,"Pompe 2",cuve1.getId());
-            Pompe pompe2 = generatePompe(c,"Pompe 3",cuve1.getId());
-            Pompe pompe3 = generatePompe(c,"Pompe 4",cuve1.getId());
-            Pompe pompe4 = generatePompe(c,"Pompe 5",cuve2.getId());
-            Pompe pompe5 = generatePompe(c,"Pompe 6",cuve2.getId());
-            Pompe pompe6 = generatePompe(c,"Pompe 7",cuve2.getId());
-            Pompe pompe7 = generatePompe(c,"Pompe 8",cuve2.getId());
+            Pompe pompe = generatePompe(c,"Pompe 1",cuve1.getId_cuve());
+            Pompe pompe1 = generatePompe(c,"Pompe 2",cuve1.getId_cuve());
+            Pompe pompe2 = generatePompe(c,"Pompe 3",cuve1.getId_cuve());
+            Pompe pompe3 = generatePompe(c,"Pompe 4",cuve1.getId_cuve());
+            Pompe pompe4 = generatePompe(c,"Pompe 5",cuve2.getId_cuve());
+            Pompe pompe5 = generatePompe(c,"Pompe 6",cuve2.getId_cuve());
+            Pompe pompe6 = generatePompe(c,"Pompe 7",cuve2.getId_cuve());
+            Pompe pompe7 = generatePompe(c,"Pompe 8",cuve2.getId_cuve());
 
-            pompe.Pompe pompeB1 = generatePompeB1(c,"Pompe 1",cuve1.getId());
+            pompe.Pompe pompeB1 = generatePompeB1(c,"Pompe 1",cuve1.getId_cuve());
             pompeB1.setId(pompe.getId_pompe());
-            pompe.Pompe pompeB11 = generatePompeB1(c,"Pompe 2",cuve1.getId());
-            pompeB11.setId(pompe1.getId());
-            pompe.Pompe pompeB12 = generatePompeB1(c,"Pompe 3",cuve1.getId());
-            pompeB12.setId(pompe2.getId());
-            pompe.Pompe pompeB13 = generatePompeB1(c,"Pompe 4",cuve1.getId());
-            pompeB13.setId(pompe3.getId());
-            pompe.Pompe pompeB14 = generatePompeB1(c,"Pompe 5",cuve2.getId());
-            pompeB14.setId(pompe4.getId());
-            pompe.Pompe pompeB15 = generatePompeB1(c,"Pompe 6",cuve2.getId());
-            pompeB15.setId(pompe5.getId());
-            pompe.Pompe pompeB16 = generatePompeB1(c,"Pompe 7",cuve2.getId());
-            pompeB15.setId(pompe6.getId());
-            pompe.Pompe pompeB17 = generatePompeB1(c,"Pompe 8",cuve2.getId());
-            pompeB17.setId(pompe7.getId());
+            pompe.Pompe pompeB11 = generatePompeB1(c,"Pompe 2",cuve1.getId_cuve());
+            pompeB11.setId(pompe1.getId_pompe());
+            pompe.Pompe pompeB12 = generatePompeB1(c,"Pompe 3",cuve1.getId_cuve());
+            pompeB12.setId(pompe2.getId_pompe());
+            pompe.Pompe pompeB13 = generatePompeB1(c,"Pompe 4",cuve1.getId_cuve());
+            pompeB13.setId(pompe3.getId_pompe());
+            pompe.Pompe pompeB14 = generatePompeB1(c,"Pompe 5",cuve2.getId_cuve());
+            pompeB14.setId(pompe4.getId_pompe());
+            pompe.Pompe pompeB15 = generatePompeB1(c,"Pompe 6",cuve2.getId_cuve());
+            pompeB15.setId(pompe5.getId_pompe());
+            pompe.Pompe pompeB16 = generatePompeB1(c,"Pompe 7",cuve2.getId_cuve());
+            pompeB15.setId(pompe6.getId_pompe());
+            pompe.Pompe pompeB17 = generatePompeB1(c,"Pompe 8",cuve2.getId_cuve());
+            pompeB17.setId(pompe7.getId_pompe());
 
             generalEJBLocalServer.savePompe(pompeB1,c1);
             generalEJBLocalServer.savePompe(pompeB11,c1);
@@ -116,9 +116,9 @@ public class DataGenerator {
     public static Cuve generateCuve(Connection connection,double max,String label,String idCarb) throws Exception {
         Cuve cuve = new Cuve();
         cuve.construirePK(connection);
-        cuve.setMax(max);
-        cuve.setLabel(label);
-        cuve.setId_carb(idCarb);
+        cuve.setCapacite(max);
+        cuve.setNom(label);
+        cuve.setId_carburant(idCarb);
         return (Cuve) CGenUtil.save(cuve,connection);
     }
     public static Carburant generateCarburant(Connection connection,String nom,String idTypeCarb,double puAchat,double puVente) throws Exception {
@@ -136,7 +136,7 @@ public class DataGenerator {
         TypeCarburant typeCarburant = new TypeCarburant();
         typeCarburant.construirePK(connection);
         typeCarburant.setLibelle(libelle);
-        typeCarburant.setId_unite("UNI001");
+        // typeCarburant.setId_unite("UNI001");
         return (TypeCarburant) CGenUtil.save(typeCarburant,connection);
     }
 }

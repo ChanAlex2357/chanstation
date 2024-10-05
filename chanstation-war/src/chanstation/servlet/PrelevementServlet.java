@@ -32,11 +32,11 @@ public class PrelevementServlet extends HttpServlet {
             Prelevement prelevement = new Prelevement();
 
             // Set parameters from the request
-            prelevement.setQte(req.getParameter("qte"));
+            prelevement.setCompteur(req.getParameter("qte"));
             prelevement.setDaty(req.getParameter("daty"));
             prelevement.setHeure(req.getParameter("heure"));
-            prelevement.setIdPompe(req.getParameter("idPompe"));
-            prelevement.setIdUtilisateur(req.getParameter("idUtilisateur"));
+            prelevement.setId_pompe(req.getParameter("idPompe"));
+            prelevement.setId_pompiste(req.getParameter("idUtilisateur"));
 
             FactureClient facture = prelevementSignature.ciblerDeuxBases(prelevement, null);
 
