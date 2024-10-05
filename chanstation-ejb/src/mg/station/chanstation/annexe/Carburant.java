@@ -20,7 +20,7 @@ public class Carburant extends ClassMAPTable {
 
     @Override
     public void construirePK(Connection c) throws Exception {
-        this.preparePk("TC", "GET_SEQ_CARBURANT");
+        this.preparePk("CARB", "GET_SEQ_CARBURANT");
         String pk = this.makePK(c);
         this.setId_carburant(pk);
     }

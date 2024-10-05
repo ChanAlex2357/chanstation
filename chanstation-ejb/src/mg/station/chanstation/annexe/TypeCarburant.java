@@ -1,8 +1,5 @@
 package mg.station.chanstation.annexe;
 import java.sql.Connection;
-
-import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
-
 import bean.ClassMAPTable;
 
 public class TypeCarburant extends ClassMAPTable{

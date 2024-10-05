@@ -1,6 +1,9 @@
 package mg.station.chanstation.annexe;
 
+import bean.CGenUtil;
 import bean.ClassMAPTable;
+import utilitaire.UtilDB;
+
 import java.sql.Connection;
 
 public class Cuve extends ClassMAPTable {
@@ -16,13 +19,6 @@ public class Cuve extends ClassMAPTable {
     @Override
     public String getTuppleID() {
         return id_cuve;
-    }
-
-    @Override
-    public void construirePK(Connection c) throws Exception {
-        this.preparePk("TC", "GET_SEQ_CUVE");
-        String pk = this.makePK(c);
-        this.setId_cuve(pk);
     }
 
     public String getId_cuve() {
@@ -55,5 +51,17 @@ public class Cuve extends ClassMAPTable {
 
     public void setId_carburant(String id_carburant) {
         this.id_carburant = id_carburant;
+    }
+
+    @Override
+    public void construirePK(Connection c) throws Exception {
+        this.preparePk("CV", "GET_SEQ_CUVE");
+        this.setId_cuve(makePK(c));
+    }
+
+
+    public Carburant getCarburantDetails(Connection c) throws Exception {
+        if (c == null) c=new UtilDB().GetConn();
+        return ((Carburant[]) CGenUtil.rechercher(new Carburant(),null,null," and id = '"+this.getId_carburant()+"'"))[0];
     }
 }

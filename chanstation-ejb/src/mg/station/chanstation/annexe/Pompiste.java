@@ -18,7 +18,7 @@ public class Pompiste extends ClassMAPTable {
 
     @Override
     public void construirePK(Connection c) throws Exception {
-        this.preparePk("TC", "GET_SEQ_POMPISTE");
+        this.preparePk("PMPST", "GET_SEQ_POMPISTE");
         String pk = this.makePK(c);
         this.setId_pompiste(pk);
     }
