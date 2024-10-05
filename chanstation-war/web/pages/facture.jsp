@@ -1,5 +1,5 @@
-<%@page import="itu.station.prelevement.*"%>
-<%@page import="itu.station.tools.Pompe"%>
+<%@page import="mg.station.chanstation.prelevement.*"%>
+<%@page import="mg.station.chanstation.annexe.Pompe"%>
 <%@page import="java.sql.*"%>
 <%@page import="bean.*"%>
 <%@page import="avoir.*"%>
@@ -23,9 +23,9 @@
 %>
 <div>
     <h1>Facture</h1>
-    <p>Id prelevement: <%= fc.getPrelevement().getId() %></p>
+    <p>Id prelevement: <%= fc.getPrelevement().getId_prelevement() %></p>
     <% if(avoir!=null){ %>
-        <p>Montant: <%= fc.getMontant() - avoirCalc.getSommeAvoirByOrigine(fc.getPrelevement().getId(),null) %></p>
+        <p>Montant: <%= fc.getMontant() - avoirCalc.getSommeAvoirByOrigine(fc.getPrelevement().getId_prelevement(),null) %></p>
     <% } else { %>
         <p>Montant: <%= fc.getMontant() %></p>
     <% } %>

@@ -1,7 +1,7 @@
-<%@page import="itu.station.tools.Pompiste"%>
-<%@page import="itu.station.tools.Pompe"%>
-<%@page import="itu.station.ejbService.*"%>
-<%@page import="itu.station.localEjbClient.*"%>
+<%@page import="mg.station.chanstation.annexe.Pompiste"%>
+<%@page import="mg.station.chanstation.annexe.Pompe"%>
+<%@page import="mg.station.chanstation.ejbService.*"%>
+<%@page import="mg.station.chanstation.localEjbClient.*"%>
 <%@page import="java.sql.*"%>
 <%@page import="bean.*"%>
 <%@page import="utilitaire.*"%>
@@ -27,7 +27,7 @@
          <%
             for(int i = 0 ; i < pompes.length ; i++) {
          %>
-            <option value="<%=pompes[i].getId()%>">
+            <option value="<%=pompes[i].getId_pompe()%>">
                 <%=pompes[i].getNom()%>
             </option>
          <%
@@ -41,7 +41,7 @@
             <%
                 for(int i = 0 ; i < pompistes.length ; i++) {
             %>
-                <option value="<%=pompistes[i].getId()%>">
+                <option value="<%=pompistes[i].getId_pompiste()%>">
                     <%=pompistes[i].getNom()%>
                 </option>
             <%

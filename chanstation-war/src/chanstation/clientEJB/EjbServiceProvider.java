@@ -1,9 +1,9 @@
 package chanstation.clientEJB;
 
-import itu.station.dataGenerator.DataGeneratorEjbSignature;
-import itu.station.ejbService.EjbStation2;
-import itu.station.prelevement.PrelevementSignature;
-import itu.station.stock.achat.AchatExecutorSignature;
+import mg.station.chanstation.dataGenerator.DataGeneratorEjbSignature;
+import mg.station.chanstation.ejbService.EjbStation2;
+import mg.station.chanstation.prelevement.PrelevementSignature;
+import mg.station.chanstation.stock.achat.AchatExecutorSignature;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -13,7 +13,7 @@ public class EjbServiceProvider {
     public static DataGeneratorEjbSignature getMagasinEjbService() {
         try {
             Context c = new InitialContext();
-            return (DataGeneratorEjbSignature) c.lookup("java:global/myStation/DataGeneratorAjbService!itu.station.dataGenerator.DataGeneratorEjbSignature");
+            return (DataGeneratorEjbSignature) c.lookup("java:global/chanstation/DataGeneratorAjbService!mg.station.chanstation.dataGenerator.DataGeneratorEjbSignature");
         } catch (NamingException ne) {
 //            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -22,7 +22,7 @@ public class EjbServiceProvider {
     public static PrelevementSignature getPrelevementEjbService() {
         try {
             Context c = new InitialContext();
-            return (PrelevementSignature) c.lookup("java:global/myStation/PrelevementService!itu.station.prelevement.PrelevementSignature");
+            return (PrelevementSignature) c.lookup("java:global/chanstation/PrelevementService!mg.station.chanstation.prelevement.PrelevementSignature");
         } catch (NamingException ne) {
 //            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -31,7 +31,7 @@ public class EjbServiceProvider {
     public static AchatExecutorSignature getAchatExecutor(){
         try {
             Context c = new InitialContext();
-            return (AchatExecutorSignature) c.lookup("java:global/myStation/AchatExecutor!itu.station.stock.achat.AchatExecutorSignature");
+            return (AchatExecutorSignature) c.lookup("java:global/chanstation/AchatExecutor!mg.station.chanstation.stock.achat.AchatExecutorSignature");
         } catch (NamingException ne) {
 //            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -40,7 +40,7 @@ public class EjbServiceProvider {
     public static EjbStation2 getEjbLocalServer(){
         try {
             Context c = new InitialContext();
-            return (EjbStation2) c.lookup("java:global/myStation/EjbStationService!itu.station.ejbService.EjbStation2");
+            return (EjbStation2) c.lookup("java:global/chanstation/EjbStationService!mg.station.chanstation.ejbService.EjbStation2");
         } catch (NamingException ne) {
             throw new RuntimeException(ne);
         }

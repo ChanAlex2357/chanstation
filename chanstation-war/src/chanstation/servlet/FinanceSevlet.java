@@ -1,6 +1,6 @@
 package chanstation.servlet;
 
-
+import mg.station.chanstation.finance.StatutFinancier;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

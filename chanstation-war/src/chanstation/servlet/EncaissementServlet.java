@@ -1,8 +1,8 @@
 package chanstation.servlet;
 
 import caisse.MvtCaisse;
-import itu.station.prelevement.Encaissement;
-import itu.station.prelevement.FactureClient;
+import mg.station.chanstation.prelevement.Encaissement;
+import mg.station.chanstation.prelevement.FactureClient;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

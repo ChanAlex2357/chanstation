@@ -1,12 +1,12 @@
 package chanstation.servlet;
 
 import avoir.AvoirFC;
-import clientEJB.EjbServiceProvider;
+import chanstation.clientEJB.EjbServiceProvider;
 import ejbServer.GeneralEJBLocalServer;
-import itu.station.ejbService.EjbStation2;
-import itu.station.localEjbClient.EjbClientGetter;
-import itu.station.prelevement.Avoir;
-import itu.station.prelevement.FactureClient;
+import mg.station.chanstation.ejbService.EjbStation2;
+import mg.station.chanstation.localEjbClient.EjbClientGetter;
+import mg.station.chanstation.prelevement.Avoir;
+import mg.station.chanstation.prelevement.FactureClient;
 import utilitaire.UtilDB;
 
 import javax.naming.NamingException;

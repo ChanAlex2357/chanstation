@@ -1,13 +1,13 @@
 package chanstation.servlet;
 
 import clientEJB.EjbServiceProvider;
-import itu.station.dataGenerator.DataGenerator;
-import itu.station.dataGenerator.DataGeneratorAjbService;
-import itu.station.dataGenerator.DataGeneratorEjbSignature;
-import itu.station.prelevement.FactureClient;
-import itu.station.prelevement.Prelevement;
-import itu.station.prelevement.PrelevementService;
-import itu.station.prelevement.PrelevementSignature;
+import mg.station.chanstation.dataGenerator.DataGenerator;
+import mg.station.chanstation.dataGenerator.DataGeneratorAjbService;
+import mg.station.chanstation.dataGenerator.DataGeneratorEjbSignature;
+import mg.station.chanstation.prelevement.FactureClient;
+import mg.station.chanstation.prelevement.Prelevement;
+import mg.station.chanstation.prelevement.PrelevementService;
+import mg.station.chanstation.prelevement.PrelevementSignature;
 import utilitaire.UtilDB;
 
 import javax.naming.Context;

@@ -62,6 +62,6 @@ public class Cuve extends ClassMAPTable {
 
     public Carburant getCarburantDetails(Connection c) throws Exception {
         if (c == null) c=new UtilDB().GetConn();
-        return ((Carburant[]) CGenUtil.rechercher(new Carburant(),null,null," and id = '"+this.getId_carburant()+"'"))[0];
+        return ((Carburant[]) CGenUtil.rechercher(new Carburant(),null,null," and id_carburant = '"+this.getId_carburant()+"'"))[0];
     }
 }

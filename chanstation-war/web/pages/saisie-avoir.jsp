@@ -1,5 +1,5 @@
-<%@page import="itu.station.prelevement.*"%>
-<%@page import="itu.station.tools.*"%>
+<%@page import="mg.station.chanstation.prelevement.*"%>
+<%@page import="mg.station.chanstation.annexe.*"%>
 <%@page import="java.sql.*"%>
 <%@page import="bean.*"%>
 <%@page import="utilitaire.*"%>

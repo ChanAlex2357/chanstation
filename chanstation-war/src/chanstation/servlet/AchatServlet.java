@@ -1,9 +1,9 @@
 package chanstation.servlet;
 
-import clientEJB.EjbServiceProvider;
-import itu.station.stock.achat.AchatArgs;
-import itu.station.stock.achat.AchatExecutor;
-import itu.station.stock.achat.AchatExecutorSignature;
+import chanstation.clientEJB.EjbServiceProvider;
+import mg.station.chanstation.stock.achat.AchatArgs;
+import mg.station.chanstation.stock.achat.AchatExecutor;
+import mg.station.chanstation.stock.achat.AchatExecutorSignature;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

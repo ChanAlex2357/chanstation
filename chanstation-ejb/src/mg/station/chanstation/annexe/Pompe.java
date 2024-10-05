@@ -54,9 +54,9 @@ public class Pompe extends ClassMAPTable {
     public Cuve getCuveByIdPompe(String idPompe,Connection connection) throws Exception {
         if (idPompe == null || idPompe.equals("")) idPompe = this.getId_pompe();//
         //Alaina aloha ilay pompe e dia avoay ny idCuve!!!!
-        Pompe pompe = ((Pompe[]) CGenUtil.rechercher(new Pompe(),null,null,connection," and id ='"+idPompe+"'"))[0];
+        Pompe pompe = ((Pompe[]) CGenUtil.rechercher(new Pompe(),null,null,connection," and id_pompe ='"+idPompe+"'"))[0];
         //izay voa manao hoe id_cuve=...
         System.out.println("POMPE ID:"+pompe.getId_cuve());
-        return ((Cuve[]) CGenUtil.rechercher(new Cuve(),null,null,connection," and id='"+pompe.getId_cuve()+"'"))[0];
+        return ((Cuve[]) CGenUtil.rechercher(new Cuve(),null,null,connection," and id_cuve='"+pompe.getId_cuve()+"'"))[0];
     }
 }

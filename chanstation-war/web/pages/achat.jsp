@@ -1,4 +1,4 @@
-<%@page import="itu.station.tools.Cuve"%>
+<%@page import="mg.station.chanstation.annexe.Cuve"%>
 <%@page import="java.sql.*"%>
 <%@page import="bean.*"%>
 <%@page import="utilitaire.*"%>
@@ -18,8 +18,8 @@
             <%
                 for(int i = 0 ; i < cuves.length ; i++) {
             %>
-                <option value="<%=cuves[i].getId()%>">
-                    <%=cuves[i].getLabel()%>
+                <option value="<%=cuves[i].getId_cuve()%>">
+                    <%=cuves[i].getNom()%>
                 </option>
             <%
                }
