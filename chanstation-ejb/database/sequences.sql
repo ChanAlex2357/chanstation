@@ -80,3 +80,35 @@ BEGIN
    RETURN retour;
 END;
 /
+
+-- Création de la séquence pour prelevement_cuve
+CREATE SEQUENCE prelevement_cuve_seq
+    START WITH 1
+    INCREMENT BY 1;
+
+-- Création de la fonction pour récupérer la prochaine valeur de la séquence
+CREATE OR REPLACE FUNCTION GET_SEQ_PRELEVEMENT_CUVE
+   RETURN NUMBER
+IS
+   retour NUMBER;
+BEGIN
+   SELECT prelevement_cuve_seq.NEXTVAL INTO retour FROM DUAL;
+   RETURN retour;
+END;
+/
+
+-- Création de la séquence pour limit_cuve
+CREATE SEQUENCE limit_cuve_seq
+    START WITH 1
+    INCREMENT BY 1;
+
+-- Création de la fonction pour récupérer la prochaine valeur de la séquence
+CREATE OR REPLACE FUNCTION GET_SEQ_LIMIT_CUVE
+   RETURN NUMBER
+IS
+   retour NUMBER;
+BEGIN
+   SELECT limit_cuve_seq.NEXTVAL INTO retour FROM DUAL;
+   RETURN retour;
+END;
+/

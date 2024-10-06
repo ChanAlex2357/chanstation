@@ -51,3 +51,29 @@ CREATE TABLE prelevement(
    FOREIGN KEY(id_pompiste) REFERENCES pompiste(id_pompiste),
    FOREIGN KEY(id_pompe) REFERENCES pompe(id_pompe)
 );
+
+
+CREATE TABLE type_mvt(
+   Id_type_mvt VARCHAR(255) ,
+   labelle VARCHAR(255)  NOT NULL,
+   PRIMARY KEY(Id_type_mvt)
+);
+
+CREATE TABLE limit_cuve(
+   id_limit_cuve VARCHAR(255) ,
+   limit NUMBER(15,2)   NOT NULL,
+   qte NUMBER(15,2)   NOT NULL,
+   id_cuve VARCHAR(255)  NOT NULL,
+   PRIMARY KEY(id_limit_cuve),
+   FOREIGN KEY(id_cuve) REFERENCES cuve(id_cuve)
+);
+
+CREATE TABLE prelevement_cuve(
+   id_prelevement_cuve VARCHAR(255) ,
+   daty DATE NOT NULL,
+   limit NUMBER(15,2)   NOT NULL,
+   qte NUMBER(15,2)   NOT NULL,
+   id_cuve VARCHAR(255)  NOT NULL,
+   PRIMARY KEY(id_prelevement_cuve),
+   FOREIGN KEY(id_cuve) REFERENCES cuve(id_cuve)
+);
