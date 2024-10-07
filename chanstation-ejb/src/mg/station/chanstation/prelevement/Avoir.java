@@ -69,7 +69,7 @@ public class Avoir {
         AvoirFC avoirFC = new AvoirFC();
         boolean estOuvert = false;
         try{
-            if (connection == null) {connection = new UtilDB().GetConn("gallois","gallois");estOuvert=true;}
+            if (connection == null) {connection = new UtilDB("gallois","gallois").GetConn();estOuvert=true;}
             if (tsotra == null) {connection = new UtilDB().GetConn();}
             Pompe pompe = this.getFactureClient().getPrelevement().getPompe(tsotra);
             Cuve cuve = pompe.getCuveByIdPompe("",tsotra);
@@ -132,7 +132,7 @@ public class Avoir {
     }
     public double getSommeAvoirByOrigine(String idOrigine,Connection connection) throws Exception {
         boolean estOuvert = false;
-        if (connection == null) {connection = new UtilDB().GetConn("gallois","gallois");estOuvert = true;}
+        if (connection == null) {connection = new UtilDB("gallois","gallois").GetConn();estOuvert = true;}
         double qteAvoir = 0;
         try{
             AvoirFCFille[] avoirFCFilles = (AvoirFCFille[])  CGenUtil.rechercher(new AvoirFCFille(),null,null,connection," and idOrigine='"+idOrigine+"'");

@@ -5,7 +5,7 @@
 <%@page import="utilitaire.*"%>
 <%@page import="vente.*"%>
 <%
-    Connection connection = new UtilDB().GetConn("gallois","gallois");
+    Connection connection = new UtilDB("gallois","gallois").GetConn();
     FactureClient fc = (FactureClient) session.getAttribute("facture");
     VenteDetails[] venteDetails = fc.getPrelevement().viser(connection).getVenteDetailsNonGrp(connection);
 %>

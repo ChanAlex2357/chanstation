@@ -21,7 +21,7 @@ public class PrelevementService implements PrelevementSignature{
     public FactureClient ciblerDeuxBases(Prelevement prelevement,Connection connection) throws Exception {
         // Prélever compteur
         if (connection == null) connection = new UtilDB().GetConn();
-        Connection c1 = new UtilDB().GetConn("gallois","gallois");
+        Connection c1 = new UtilDB("gallois","gallois").GetConn();
         connection.setAutoCommit(false);
         c1.setAutoCommit(false);
         try{

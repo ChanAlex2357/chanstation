@@ -23,7 +23,7 @@ public class EjbClientGetter {
     public static MagasinLocalEJB getMagasinEjbService() {
         try {
             Context c = new InitialContext();
-            return (MagasinLocalEJB) c.lookup("java:module/MagasinEJBService!magasin.MagasinLocalEJB");
+            return (MagasinLocalEJB) c.lookup("java:module/MagasinEJBService!mg.station.chanstation.magasin.MagasinLocalEJB");
         } catch (NamingException ne) {
 //            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

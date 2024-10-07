@@ -8,7 +8,7 @@ import mg.station.chanstation.annexe.Cuve;
 import mg.station.chanstation.annexe.Pompe;
 import mg.station.chanstation.annexe.TypeCarburant;
 import magasin.Magasin;
-import magasin.MagasinLocalEJB;
+import mg.station.chanstation.magasin.MagasinLocalEJB;
 import utilitaire.UtilDB;
 
 import java.sql.Connection;
@@ -17,7 +17,7 @@ public class DataGenerator {
     public static void generateData() throws Exception {
 
         Connection c = new UtilDB().GetConn();
-        Connection c1 = new UtilDB().GetConn("gallois","gallois");
+        Connection c1 = new UtilDB("gallois","gallois").GetConn();
         try {
             TypeCarburant typeCarburant = generateTypeCarburant(c,"Essence");
             Carburant carburant1 = generateCarburant(c,"SP95", typeCarburant.getId_type_carburant(), 4900,5900);

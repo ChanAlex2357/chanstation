@@ -11,11 +11,19 @@ public class PrelevementCuve extends ClassMAPTable {
     double qte;
     String id_cuve;
 
+    public PrelevementCuve() {
+    }
+    public PrelevementCuve( PrelevementCuveArgs args) {
+        setDaty(args.getDaty());
+        setLimit(args.getLimit());
+        setId_cuve(args.getId_cuve());
+    }
+
     @Override
     public String getAttributIDName() {
         return "id_prelevement_cuve";
     }
-
+    
     @Override
     public String getTuppleID() {
         return id_prelevement_cuve;

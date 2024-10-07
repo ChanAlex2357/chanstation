@@ -171,7 +171,7 @@ public class Prelevement extends ClassMAPTable {
     }
 
     public Vente viser(Connection connection) throws Exception {
-        if (connection == null) connection = new UtilDB().GetConn("gallois","gallois");
+        if (connection == null) connection = new UtilDB("gallois","gallois").GetConn();
         GeneralEJBLocalServer generalEJBLocalServer = EjbClientGetter.getGeneralEjbService();
         return generalEJBLocalServer.getVenteByIdPrelevement(this.getId_prelevement(),connection);
     }

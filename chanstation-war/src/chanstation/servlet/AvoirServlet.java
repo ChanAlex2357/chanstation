@@ -31,7 +31,7 @@ public class AvoirServlet extends HttpServlet {
         Avoir avoir = new Avoir((FactureClient)req.getSession().getAttribute("facture"),idClient,idProduit,montant);
         Connection connection = null;
         try {
-            connection = new UtilDB().GetConn("gallois","gallois");
+            connection = new UtilDB("gallois","gallois").GetConn();
             EjbStation2 generalEJBLocalServer = EjbServiceProvider.getEjbLocalServer();
             AvoirFC avoir1 = generalEJBLocalServer.genererAvoir(avoir,connection);
             req.getSession().setAttribute("avoirAViser",avoir1);

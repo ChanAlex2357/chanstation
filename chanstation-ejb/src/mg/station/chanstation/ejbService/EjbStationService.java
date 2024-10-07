@@ -20,7 +20,7 @@ import java.sql.Date;
 public class EjbStationService implements EjbStation2{
     @Override
     public StatutFinancier getStatutFinancier(Date dateMin, Date dateMax, Connection connection) throws Exception {
-        if (connection == null) connection = new UtilDB().GetConn("gallois","gallois");
+        if (connection == null) connection = new UtilDB("gallois","gallois").GetConn();
         StatutFinancier statutFinancier = new StatutFinancier();
         statutFinancier.getEtatDeFinance(dateMin,dateMax,connection);
         return null;
@@ -35,7 +35,7 @@ public class EjbStationService implements EjbStation2{
     public AvoirFC genererAvoir(Avoir avoir, Connection connection) throws Exception {
         boolean estOuvert = false;
         try{
-            if (connection == null) {connection = new UtilDB().GetConn("gallois","gallois");estOuvert=true;}
+            if (connection == null) {connection = new UtilDB("gallois","gallois").GetConn();estOuvert=true;}
             return avoir.genererAvoir("1060",connection);
         }catch (Exception e){
             e.printStackTrace();

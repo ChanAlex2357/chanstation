@@ -44,7 +44,7 @@ public class Encaissement {
     }
 
     public MvtCaisse makeMovement(Connection connection) throws Exception {
-        if (connection == null) connection = new UtilDB().GetConn("gallois","gallois");
+        if (connection == null) connection = new UtilDB("gallois","gallois").GetConn();
         if (estEncaisse(connection)) throw new Exception("Prélevement déja encaissé");
         try{
             GeneralEJBLocalServer generalEJBLocalServer = EjbClientGetter.getGeneralEjbService();

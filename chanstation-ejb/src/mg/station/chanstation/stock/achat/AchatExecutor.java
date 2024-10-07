@@ -20,7 +20,7 @@ public class AchatExecutor implements AchatExecutorSignature{
     @Override
     public void achat(AchatArgs achatArgs) throws Exception {
         Connection connection = null;
-        Connection gallois = new UtilDB().GetConn("gallois","gallois");
+        Connection gallois = new UtilDB("gallois","gallois").GetConn();
         GeneralEJBLocalServer generalEJBService = EjbClientGetter.getGeneralEjbService();
 //        generalEJBService.
         try {
