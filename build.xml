@@ -1,7 +1,7 @@
 <project name="deploy-ejb-chanstation" default="deploy" basedir="./build-file">
     <property environment="env"/>
 
-    <property name="deploy.dir" value="C:\Server\wildfly-10.0.0.Final\standalone\deployments"/>
+    <property name="deploy.dir" value="D:\Softwares\wildfly-10.0.0.Final\standalone\deployments"/>
 
     <property name="chanstation-warname" value="chanstation.war"/>
     <property name="chanstation-jarname" value="chanstation-ejb.jar"/>
