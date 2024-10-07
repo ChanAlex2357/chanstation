@@ -28,7 +28,7 @@ public class PrelevementService implements PrelevementSignature{
             prelevement.construirePK(connection);
 
             MvtArgent mvtArgent = new VenteService();
-            MvtDTO mvtDTO = new MvtDTO(prelevement.getPompe(connection).getId_pompe(), 1, 1 , prelevement.getDaty());
+            MvtDTO mvtDTO = new MvtDTO(prelevement.getPompe(connection).getId_cuve(), 1, 1 , prelevement.getDaty());
             FactureClient factureClient = null;
             PrelevementLocal prelevementLocal = EjbClientGetter.getPrelevementEjbService();
             prelevement.Prelevement prelevement1 = getPrelevementForGallois(prelevement);
