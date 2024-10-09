@@ -7,7 +7,23 @@ public class TypeMvt extends ClassMAPTable {
     String id_type_mvt;
     int valeur;
     String desce;
-
+    public TypeMvt(){
+        this.setNomTable();
+    }
+    public TypeMvt(int valeur , String desce){
+        setValeur(valeur);
+        setDesce(desce);
+        this.setNomTable();
+    }
+    public TypeMvt(int valeur){
+        setValeur(valeur);
+        setDesce(null);
+        this.setNomTable();
+    }
+    
+    private void setNomTable(){
+        this.setNomTable("type_mvt");
+    }
     @Override
     public String getAttributIDName() {
         return "id_type_mvt";

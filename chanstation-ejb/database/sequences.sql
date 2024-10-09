@@ -140,3 +140,16 @@ BEGIN
    RETURN retour;
 END;
 /
+
+-- Sequence and Function for unite
+CREATE SEQUENCE unite_seq START WITH 1;
+
+CREATE OR REPLACE FUNCTION GET_NEXT_MVT_STOCK_ID
+   RETURN NUMBER
+IS
+   retour NUMBER;
+BEGIN
+   SELECT mvt_stock_seq.NEXTVAL INTO retour FROM DUAL;
+   RETURN retour;
+END;
+/

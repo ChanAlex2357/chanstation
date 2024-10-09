@@ -1,5 +1,7 @@
 package mg.station.chanstation.annexe;
 
+import java.sql.Connection;
+
 import bean.ClassMAPTable;
 
 public class Unite extends ClassMAPTable{
@@ -13,6 +15,11 @@ public class Unite extends ClassMAPTable{
     @Override
     public String getTuppleID() {
         return this.getId_unite();
+    }
+
+    @Override
+    public void construirePK(Connection c) throws Exception {
+        preparePk("UNI", "GET_");
     }
     public String getId_unite() {
         return id_unite;

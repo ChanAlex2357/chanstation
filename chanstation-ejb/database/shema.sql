@@ -1,8 +1,30 @@
+CREATE TABLE pompiste(
+   id_pompiste VARCHAR(255) ,
+   nom VARCHAR(255)  NOT NULL,
+   PRIMARY KEY(id_pompiste)
+);
+
+CREATE TABLE type_mvt(
+   id_type_mvt VARCHAR(255) ,
+   valeur NUMBER(10) NOT NULL,
+   desce VARCHAR(255) ,
+   PRIMARY KEY(id_type_mvt)
+);
+
+CREATE TABLE unite(
+   id_unite VARCHAR(255) ,
+   val VARCHAR(255)  NOT NULL,
+   desce VARCHAR(255) ,
+   PRIMARY KEY(id_unite)
+);
+
 CREATE TABLE type_carburant(
    id_type_carburant VARCHAR(255) ,
    libelle VARCHAR(255)  NOT NULL,
    dsce VARCHAR(255) ,
-   PRIMARY KEY(id_type_carburant)
+   id_unite VARCHAR(255)  NOT NULL,
+   PRIMARY KEY(id_type_carburant),
+   FOREIGN KEY(id_unite) REFERENCES unite(id_unite)
 );
 
 CREATE TABLE carburant(
@@ -33,12 +55,6 @@ CREATE TABLE pompe(
    FOREIGN KEY(id_cuve) REFERENCES cuve(id_cuve)
 );
 
-CREATE TABLE pompiste(
-   id_pompiste VARCHAR(255) ,
-   nom VARCHAR(255)  NOT NULL,
-   PRIMARY KEY(id_pompiste)
-);
-
 CREATE TABLE prelevement_pompe(
    id_prelevement_pompe VARCHAR(255) ,
    daty DATE NOT NULL,
@@ -62,16 +78,9 @@ CREATE TABLE inventaire(
    FOREIGN KEY(id_cuve) REFERENCES cuve(id_cuve)
 );
 
-CREATE TABLE type_mvt(
-   id_type_mvt VARCHAR(255) ,
-   valeur NUMBER(10) NOT NULL,
-   desce VARCHAR(255) ,
-   PRIMARY KEY(id_type_mvt)
-);
-
 CREATE TABLE equivalence(
    id_equivalence NUMBER(10),
-   niveau NUMBER(15,2)   NOT NULL,
+   limit NUMBER(15,2)   NOT NULL,
    qte NUMBER(15,2)   NOT NULL,
    id_cuve VARCHAR(255)  NOT NULL,
    PRIMARY KEY(id_equivalence),
@@ -81,7 +90,7 @@ CREATE TABLE equivalence(
 CREATE TABLE prelevement_cuve(
    id_prelevement_cuve VARCHAR(255) ,
    daty DATE NOT NULL,
-   niveau NUMBER(15,2)   NOT NULL,
+   limit NUMBER(15,2)   NOT NULL,
    qte NUMBER(15,2)   NOT NULL,
    id_cuve VARCHAR(255)  NOT NULL,
    PRIMARY KEY(id_prelevement_cuve),
