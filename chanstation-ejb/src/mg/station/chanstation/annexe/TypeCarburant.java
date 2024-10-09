@@ -7,6 +7,7 @@ public class TypeCarburant extends ClassMAPTable {
     String id_type_carburant;
     String libelle;
     String dsce;
+    String id_unite;
 
     @Override
     public String getAttributIDName() {
@@ -48,6 +49,12 @@ public class TypeCarburant extends ClassMAPTable {
     public void setDsce(String dsce) {
         this.dsce = dsce;
     }
+    public String getId_unite() {
+        return id_unite;
+    }
 
+    public void setId_unite(String id_unite) {
+        this.id_unite = id_unite;
+    }
     
 }
