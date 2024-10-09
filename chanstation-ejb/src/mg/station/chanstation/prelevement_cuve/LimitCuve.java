@@ -21,7 +21,7 @@ public class LimitCuve extends ClassMAPTable {
 
     @Override
     public void construirePK(Connection c) throws Exception {
-        this.preparePk("TC", "GET_SEQ_LIMIT_CUVE");
+        this.preparePk("LMTCV", "GET_SEQ_LIMIT_CUVE");
         String pk = this.makePK(c);
         this.setId_limit_cuve(pk);
     }
