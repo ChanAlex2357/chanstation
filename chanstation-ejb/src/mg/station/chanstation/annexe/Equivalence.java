@@ -1,37 +1,38 @@
 package mg.station.chanstation.annexe;
 
-import bean.ClassMAPTable;
 import java.sql.Connection;
+import bean.ClassMAPTable;
 
-public class LimitCuve extends ClassMAPTable {
-    String id_limit_cuve;
-    double limit;
-    double qte;
-    String id_cuve;
+public class Equivalence extends ClassMAPTable {
+    private int id_equivalence;
+    private double limit;
+    private double qte;
+    private String id_cuve;
 
     @Override
     public String getAttributIDName() {
-        return "id_limit_cuve";
+        return "id_equivalence";
     }
 
     @Override
     public String getTuppleID() {
-        return id_limit_cuve;
+        return String.valueOf(id_equivalence);
     }
 
     @Override
     public void construirePK(Connection c) throws Exception {
-        this.preparePk("TC", "GET_SEQ_LIMIT_CUVE");
+        this.preparePk("EQ", "GET_SEQ_EQUIVALENCE");
         String pk = this.makePK(c);
-        this.setId_limit_cuve(pk);
+        this.setId_equivalence(Integer.parseInt(pk));
     }
 
-    public String getId_limit_cuve() {
-        return id_limit_cuve;
+    // Getters and Setters
+    public int getId_equivalence() {
+        return id_equivalence;
     }
 
-    public void setId_limit_cuve(String id_limit_cuve) {
-        this.id_limit_cuve = id_limit_cuve;
+    public void setId_equivalence(int id_equivalence) {
+        this.id_equivalence = id_equivalence;
     }
 
     public double getLimit() {
@@ -57,5 +58,4 @@ public class LimitCuve extends ClassMAPTable {
     public void setId_cuve(String id_cuve) {
         this.id_cuve = id_cuve;
     }
-
 }

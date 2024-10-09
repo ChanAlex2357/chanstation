@@ -1,9 +1,13 @@
 package mg.station.chanstation.annexe;
-import java.sql.Connection;
-import bean.ClassMAPTable;
 
-public class TypeCarburant extends ClassMAPTable{
-    String id_type_carburant,libelle,desce;
+import bean.ClassMAPTable;
+import java.sql.Connection;
+
+public class TypeCarburant extends ClassMAPTable {
+    String id_type_carburant;
+    String libelle;
+    String dsce;
+
     @Override
     public String getAttributIDName() {
         return "id_type_carburant";
@@ -17,7 +21,7 @@ public class TypeCarburant extends ClassMAPTable{
     @Override
     public void construirePK(Connection c) throws Exception {
         this.preparePk("TC", "GET_SEQ_TYPE_CARBURANT");
-        String pk =  this.makePK(c);
+        String pk = this.makePK(c);
         this.setId_type_carburant(pk);
     }
 
@@ -37,11 +41,13 @@ public class TypeCarburant extends ClassMAPTable{
         this.libelle = libelle;
     }
 
-    public String getDesce() {
-        return desce;
+    public String getDsce() {
+        return dsce;
     }
 
-    public void setDesce(String desce) {
-        this.desce = desce;
+    public void setDsce(String dsce) {
+        this.dsce = dsce;
     }
+
+    
 }

@@ -23,12 +23,12 @@ public class PrelevementCuve extends ClassMAPTable {
 
     @Override
     public void construirePK(Connection c) throws Exception {
-        this.preparePk("TC", "GET_SEQ_PRELEVEMENT_CUVE");
+        this.preparePk("PC", "GET_SEQ_PRELEVEMENT_CUVE");
         String pk = this.makePK(c);
         this.setId_prelevement_cuve(pk);
     }
 
-
+    // Getters and Setters
     public String getId_prelevement_cuve() {
         return id_prelevement_cuve;
     }

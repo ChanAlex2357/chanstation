@@ -3,9 +3,10 @@ package mg.station.chanstation.stock;
 import bean.ClassMAPTable;
 import java.sql.Connection;
 
-public class TypeMouvement extends ClassMAPTable {
+public class TypeMvt extends ClassMAPTable {
     String id_type_mvt;
-    String labelle;
+    int valeur;
+    String desce;
 
     @Override
     public String getAttributIDName() {
@@ -19,11 +20,12 @@ public class TypeMouvement extends ClassMAPTable {
 
     @Override
     public void construirePK(Connection c) throws Exception {
-        this.preparePk("TC", "GET_SEQ_TYPE_MVT");
+        this.preparePk("TMVT", "GET_SEQ_TYPE_MVT");
         String pk = this.makePK(c);
         this.setId_type_mvt(pk);
     }
 
+    // Getters and Setters
     public String getId_type_mvt() {
         return id_type_mvt;
     }
@@ -32,11 +34,19 @@ public class TypeMouvement extends ClassMAPTable {
         this.id_type_mvt = id_type_mvt;
     }
 
-    public String getLabelle() {
-        return labelle;
+    public int getValeur() {
+        return valeur;
     }
 
-    public void setLabelle(String labelle) {
-        this.labelle = labelle;
+    public void setValeur(int valeur) {
+        this.valeur = valeur;
+    }
+
+    public String getDesce() {
+        return desce;
+    }
+
+    public void setDesce(String desce) {
+        this.desce = desce;
     }
 }
