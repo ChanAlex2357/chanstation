@@ -19,7 +19,7 @@ public class GenServlet extends HttpServlet {
         final DataGenService data_gen = LocalEjbService.getDataGenService();
         try {
             data_gen.generateTypeMouvement(null);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

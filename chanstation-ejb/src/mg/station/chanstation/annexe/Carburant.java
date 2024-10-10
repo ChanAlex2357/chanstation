@@ -16,6 +16,10 @@ public class Carburant extends ClassMAPTable {
         setPu_achat(pu_achat);
         setId_type_carburant(id_type_carburant);
     }
+    @Override
+    public String toString() {
+        return "["+getId_carburant()+"]"+getNom()+" : "+getPu_vente()+" ; "+getPu_achat()+"<"+getId_type_carburant()+">";
+    }
     public Carburant(){setNomTable("CARBURANT");}
     @Override
     public String getAttributIDName() {

@@ -24,6 +24,7 @@ public class Unite extends ClassMAPTable{
     @Override
     public void construirePK(Connection c) throws Exception {
         preparePk("UNI", "GET_SEQ_UNITE");
+        setId_unite(makePK());
     }
     public String getId_unite() {
         return id_unite;

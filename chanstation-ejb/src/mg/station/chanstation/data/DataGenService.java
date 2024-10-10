@@ -20,10 +20,10 @@ public interface DataGenService {
     public Unite[] generateUnite( Connection conn) throws Exception;
     public TypeCarburant[] generateTypeCarburant(Unite unite , Connection conn) throws Exception;
     public Carburant[] generateCarburant( TypeCarburant typeCarburant,Connection conn) throws Exception;
-    public Cuve[] generateCuve(Carburant carburant , Connection conn)throws Exception;
-    public Pompe[] generatePompe(Cuve cuve, Connection conn) throws Exception;
+    public Cuve[] generateCuve(Carburant[] carburant , Connection conn)throws Exception;
+    public Pompe[] generatePompe(Cuve[] cuve, Connection conn) throws Exception;
     public Pompiste[] generatePompiste(Connection conn) throws Exception;
-    public Equivalence[] generateEquivalence(Cuve cuve , Connection conn) throws Exception;
+    public Equivalence[] generateEquivalence(Cuve cuve[] , Connection conn) throws Exception;
     public void generateLocalData( Connection conn) throws Exception;
 
 }

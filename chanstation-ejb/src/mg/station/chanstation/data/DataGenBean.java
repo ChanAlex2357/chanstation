@@ -1,6 +1,8 @@
 package mg.station.chanstation.data;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+
 import javax.ejb.Stateless;
 import mg.station.chanstation.annexe.Unite;
 import bean.CGenUtil;
@@ -15,15 +17,13 @@ import mg.station.chanstation.stock.TypeMvt;
 import utilitaire.UtilDB;
 @Stateless
 public class DataGenBean implements DataGenService {
-    private Object[] loadGenerated(ClassMAPTable classMAPTable , Connection conn) throws Exception{
-        return CGenUtil.rechercher(classMAPTable, null, null , conn ,null);
-    }
+   
     /*
      * TYPE MOUVEMENT
      */
     @Override
     public TypeMvt[] generateTypeMouvement( Connection conn) throws Exception {
-        TypeMvt[] typeMvts  = (TypeMvt[])loadGenerated(new TypeMvt(), conn);
+        TypeMvt[] typeMvts  = (TypeMvt[])CGenUtil.rechercher(new TypeMvt(), null,null,conn,"");
         if (typeMvts.length > 0) {
             return typeMvts;
         }
@@ -37,7 +37,7 @@ public class DataGenBean implements DataGenService {
         );
         return typeMvts;
     }
-    private TypeMvt createTypeMouvement(int valeur , String desce , Connection conn) throws Exception{
+    public TypeMvt createTypeMouvement(int valeur , String desce , Connection conn) throws Exception{
         TypeMvt typeMvt = new TypeMvt();
         typeMvt.construirePK(conn);
         typeMvt.setValeur(valeur);
@@ -49,18 +49,18 @@ public class DataGenBean implements DataGenService {
      */
     @Override
     public Unite[] generateUnite(Connection conn) throws Exception {
-        Unite[] unites = (Unite[])loadGenerated(new Unite() , conn );
+        Unite[] unites = (Unite[])CGenUtil.rechercher(new Unite() , null,null,conn ,"");
         if (unites.length > 0) {
             return unites;
         }
         unites = new Unite[1];
         unites[0] = createUnite("litre", "Litre (L)", conn);
-        CGenUtil.save(unites[0]);
+        CGenUtil.save(unites[0],conn);
 
         System.out.println(successfullmessage("Unite"));
         return unites;
     }
-    private Unite createUnite(String val , String desce , Connection conn) throws Exception{
+    public Unite createUnite(String val , String desce , Connection conn) throws Exception{
         Unite unite = new Unite();
         unite.construirePK(conn);
         unite.setVal("litre");
@@ -72,17 +72,17 @@ public class DataGenBean implements DataGenService {
      */
     @Override
     public TypeCarburant[] generateTypeCarburant(Unite unite,Connection conn) throws Exception {
-        TypeCarburant[] typeCarburant =(TypeCarburant[])loadGenerated(new TypeCarburant(),conn);
+        TypeCarburant[] typeCarburant =(TypeCarburant[])CGenUtil.rechercher(new TypeCarburant(),null,null,conn,"");
         if (typeCarburant.length>0) {
             return typeCarburant;
         }
         typeCarburant = new TypeCarburant[1];
         typeCarburant[0] = createTypeCarburant("Essence", "Carburant pour les moteur essence", unite.getId_unite(), conn);
-        CGenUtil.save(typeCarburant[0]);
+        CGenUtil.save(typeCarburant[0],conn);
         System.out.println(successfullmessage("Type Carburant"));
         return typeCarburant;
     }
-    private TypeCarburant createTypeCarburant( String libelle , String desce , String unite, Connection conn) throws Exception{
+    public TypeCarburant createTypeCarburant( String libelle , String desce , String unite, Connection conn) throws Exception{
         TypeCarburant typeCarburant = new TypeCarburant();
         typeCarburant.construirePK(conn);
         typeCarburant.setLibelle(libelle);
@@ -96,7 +96,7 @@ public class DataGenBean implements DataGenService {
      */
     @Override
     public Carburant[] generateCarburant(TypeCarburant typeCarburant,Connection conn) throws Exception {
-        Carburant[] carburants = (Carburant[]) loadGenerated(new Carburant(), conn);
+        Carburant[] carburants = (Carburant[]) CGenUtil.rechercher(new Carburant(), null,null,conn,"");
         if (carburants.length > 0 ) {
             return carburants;
         }
@@ -104,63 +104,65 @@ public class DataGenBean implements DataGenService {
         carburants[0] = createCarburant("SP95",null,  5900,4900,typeCarburant.getId_type_carburant(),conn);
         carburants[1] = createCarburant("SP98", null, 6000,5100,typeCarburant.getId_type_carburant(),conn);
 
-        CGenUtil.save(carburants[0]);
-        CGenUtil.save(carburants[1]);
+        CGenUtil.save(carburants[0],conn);
+        CGenUtil.save(carburants[1],conn);
         System.out.println(successfullmessage("Carburant"));
         return carburants;
     }
-    private Carburant createCarburant(String nom , String desce , double pu_vente , double pu_achat , String typeCarburant , Connection conn) throws Exception{
+    public Carburant createCarburant(String nom , String desce , double pu_vente , double pu_achat , String typeCarburant , Connection conn) throws Exception{
         Carburant carburant = new Carburant(nom, desce, pu_vente, pu_achat, typeCarburant);
         carburant.construirePK(conn);
+        System.out.println(carburant);
         return carburant;
     }
     /*
  * CUVE
  */
 @Override
-public Cuve[] generateCuve(Carburant carburant, Connection conn) throws Exception {
-    Cuve[] cuves = (Cuve[]) loadGenerated(new Cuve(), conn);
+public Cuve[] generateCuve(Carburant[] carburant, Connection conn) throws Exception {
+    Cuve[] cuves = (Cuve[]) CGenUtil.rechercher(new Cuve(), null,null,conn,"");
     if (cuves.length > 0) {
         return cuves;
     }
     cuves = new Cuve[2];
-    cuves[0] = createCuve("Chanstation Cuve 1", 100000, carburant.getId_carburant(), conn);
-    cuves[1] = createCuve("Chanstation Cuve 2", 100000, carburant.getId_carburant(), conn);
+    cuves[0] = createCuve("Chanstation Cuve 1", 100000, carburant[0].getId_carburant(), conn);
+    cuves[1] = createCuve("Chanstation Cuve 2", 100000, carburant[1].getId_carburant(), conn);
 
-    CGenUtil.save(cuves[0]);
-    CGenUtil.save(cuves[1]);
+    CGenUtil.save(cuves[0],conn);
+    CGenUtil.save(cuves[1],conn);
     System.out.println(successfullmessage("Cuve"));
     return cuves;
 }
 
-private Cuve createCuve(String nom,double capacite,String carburant, Connection conn) throws Exception{
+public Cuve createCuve(String nom,double capacite,String carburant, Connection conn) throws Exception{
     Cuve cuve = new Cuve();
     cuve.construirePK(conn);
     cuve.setNom(nom);
     cuve.setCapacite(capacite);
     cuve.setId_carburant(carburant);
+    System.out.println(cuve);
     return cuve;
 }
 /*
  * POMPE
  */
 @Override
-public Pompe[] generatePompe(Cuve cuve, Connection conn) throws Exception {
-    Pompe[] pompes = (Pompe[]) loadGenerated(new Pompe(), conn);
+public Pompe[] generatePompe(Cuve[] cuve, Connection conn) throws Exception {
+    Pompe[] pompes = (Pompe[]) CGenUtil.rechercher(new Pompe(), null,null,conn,"");
     if (pompes.length > 0) {
         return pompes;
     }
     pompes = new Pompe[2];
-    pompes[0] = createPompe("Pompe 1", cuve.getId_cuve(), conn);
-    pompes[1] = createPompe("Pompe 2", cuve.getId_cuve(), conn);
+    pompes[0] = createPompe("Pompe 1", cuve[0].getId_cuve(), conn);
+    pompes[1] = createPompe("Pompe 2", cuve[1].getId_cuve(), conn);
 
-    CGenUtil.save(pompes[0]);
-    CGenUtil.save(pompes[1]);
+    CGenUtil.save(pompes[0],conn);
+    CGenUtil.save(pompes[1],conn);
     System.out.println(successfullmessage("Pompe"));
     return pompes;
 }
 
-private Pompe createPompe(String nom, String id_cuve, Connection conn) throws Exception {
+public Pompe createPompe(String nom, String id_cuve, Connection conn) throws Exception {
     Pompe pompe = new Pompe();
     pompe.construirePK(conn);
     pompe.setNom(nom);
@@ -173,7 +175,7 @@ private Pompe createPompe(String nom, String id_cuve, Connection conn) throws Ex
  */
 @Override
 public Pompiste[] generatePompiste(Connection conn) throws Exception {
-    Pompiste[] pompistes = (Pompiste[]) loadGenerated(new Pompiste(), conn);
+    Pompiste[] pompistes = (Pompiste[]) CGenUtil.rechercher(new Pompiste(), null,null,conn,"");
     if (pompistes.length > 0) {
         return pompistes;
     }
@@ -181,13 +183,13 @@ public Pompiste[] generatePompiste(Connection conn) throws Exception {
     pompistes[0] = createPompiste("John Doe", conn);
     pompistes[1] = createPompiste("Jane Smith", conn);
 
-    CGenUtil.save(pompistes[0]);
-    CGenUtil.save(pompistes[1]);
+    CGenUtil.save(pompistes[0],conn);
+    CGenUtil.save(pompistes[1],conn);
     System.out.println(successfullmessage("Pompiste"));
     return pompistes;
 }
 
-private Pompiste createPompiste(String nom, Connection conn) throws Exception {
+public Pompiste createPompiste(String nom, Connection conn) throws Exception {
     Pompiste pompiste = new Pompiste();
     pompiste.construirePK(conn);
     pompiste.setNom(nom);
@@ -198,22 +200,30 @@ private Pompiste createPompiste(String nom, Connection conn) throws Exception {
  * EQUIVALENCE
  */
 @Override
-public Equivalence[] generateEquivalence(Cuve cuve, Connection conn) throws Exception {
-    Equivalence[] equivalences = (Equivalence[]) loadGenerated(new Equivalence(), conn);
+public Equivalence[] generateEquivalence(Cuve[] cuve, Connection conn) throws Exception {
+    Equivalence[] equivalences = (Equivalence[]) CGenUtil.rechercher(new Equivalence(), null,null,conn,"");
     if (equivalences.length > 0) {
         return equivalences;
     }
-    equivalences = new Equivalence[2];
-    equivalences[0] = createEquivalence(5000, 1000, cuve.getId_cuve(), conn);
-    equivalences[1] = createEquivalence(10000, 2000, cuve.getId_cuve(), conn);
+    equivalences = new Equivalence[6];
+    equivalences[0] = createEquivalence(1, 100, cuve[0].getId_cuve(), conn);
+    equivalences[1] = createEquivalence(1, 100, cuve[1].getId_cuve(), conn);
+    equivalences[2] = createEquivalence(2, 200, cuve[0].getId_cuve(), conn);
+    equivalences[3] = createEquivalence(7, 400, cuve[1].getId_cuve(), conn);
+    equivalences[4] = createEquivalence(3, 300, cuve[0].getId_cuve(), conn);
+    equivalences[5] = createEquivalence(10, 900, cuve[1].getId_cuve(), conn);
 
-    CGenUtil.save(equivalences[0]);
-    CGenUtil.save(equivalences[1]);
+    CGenUtil.save(equivalences[0],conn);
+    CGenUtil.save(equivalences[1],conn);
+    CGenUtil.save(equivalences[2],conn);
+    CGenUtil.save(equivalences[3],conn);
+    CGenUtil.save(equivalences[4],conn);
+    CGenUtil.save(equivalences[5],conn);
     System.out.println(successfullmessage("Equivalence"));
     return equivalences;
 }
 
-private Equivalence createEquivalence(double limit, double qte, String id_cuve, Connection conn) throws Exception {
+public Equivalence createEquivalence(double limit, double qte, String id_cuve, Connection conn) throws Exception {
     Equivalence equivalence = new Equivalence();
     equivalence.construirePK(conn);
     equivalence.setLimit(limit);
@@ -224,10 +234,32 @@ private Equivalence createEquivalence(double limit, double qte, String id_cuve, 
 
    
     @Override
-    public void generateLocalData(Connection conn) throws Exception {
-        
+    public void generateLocalData(Connection conn) throws SQLException  {
+        if (conn == null) {
+            conn = new UtilDB().GetConn();
+        }
+        try {
+            conn.setAutoCommit(false);
+            generateTypeMouvement(conn);
+            generatePompiste(conn);
+
+            Unite[] unite= generateUnite(conn);
+            TypeCarburant[] typeCarburants = generateTypeCarburant(unite[0], conn);
+            Carburant[] carburants = generateCarburant(typeCarburants[0], conn);
+            Cuve[] cuves = generateCuve(carburants, conn);
+            generatePompe(cuves, conn);
+            generateEquivalence(cuves, conn);
+            conn.commit();
+        } catch (Exception e) {
+            conn.rollback();
+        }
+        finally{
+            conn.close();
+        }
+
+
     }
-    private String successfullmessage( String process){
+    public String successfullmessage( String process){
         return "<"+process +">generated successfully";
     }
 }

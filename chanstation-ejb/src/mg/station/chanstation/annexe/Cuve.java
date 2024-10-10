@@ -5,12 +5,15 @@ import bean.ClassMAPTable;
 import utilitaire.UtilDB;
 
 import java.sql.Connection;
-
 public class Cuve extends ClassMAPTable {
     String id_cuve, nom;
     double capacite;
     String id_carburant;
 
+    @Override
+    public String toString() {
+        return "["+getId_cuve()+";"+getNom()+";"+getCapacite()+";"+getId_carburant()+"]";
+    }
     public Cuve(){setNomTable("CUVE");}
     @Override
     public String getAttributIDName() {
@@ -19,7 +22,7 @@ public class Cuve extends ClassMAPTable {
 
     @Override
     public String getTuppleID() {
-        return id_cuve;
+        return getId_cuve();
     }
 
     public String getId_cuve() {

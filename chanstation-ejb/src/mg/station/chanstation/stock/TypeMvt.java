@@ -3,6 +3,8 @@ package mg.station.chanstation.stock;
 import bean.ClassMAPTable;
 import java.sql.Connection;
 
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
+
 public class TypeMvt extends ClassMAPTable {
     String id_type_mvt;
     int valeur;
@@ -40,7 +42,10 @@ public class TypeMvt extends ClassMAPTable {
         String pk = this.makePK(c);
         this.setId_type_mvt(pk);
     }
-
+    @Override
+    public String toString() {
+        return this.getDesce()+"["+this.getValeur()+"]";
+    }
     // Getters and Setters
     public String getId_type_mvt() {
         return id_type_mvt;
