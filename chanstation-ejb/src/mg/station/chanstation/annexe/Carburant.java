@@ -8,6 +8,14 @@ public class Carburant extends ClassMAPTable {
     double pu_vente, pu_achat;
     String id_type_carburant;
 
+    public Carburant(String nom, String desce, double pu_vente, double pu_achat, String id_type_carburant) {
+        setNomTable("CARBURANT");
+        setNom(nom);
+        setDesce(desce);
+        setPu_vente(pu_vente);
+        setPu_achat(pu_achat);
+        setId_type_carburant(id_type_carburant);
+    }
     public Carburant(){setNomTable("CARBURANT");}
     @Override
     public String getAttributIDName() {
@@ -57,6 +65,16 @@ public class Carburant extends ClassMAPTable {
     public void setPu_vente(double pu_vente) {
         this.pu_vente = pu_vente;
     }
+    public void setPu_vente(String pu) throws Exception{
+        if (pu.isEmpty()) {
+            throw new Exception("Aucune prix de vente n'a ete indiquer");
+        }
+        double pu_vente = Double.parseDouble(pu);
+        if (pu_vente < 0) {
+            throw new Exception("Prix de vente negatif , veuillez entrez un montant valide >= 0");
+        }
+        setPu_vente(pu_vente);
+    }
 
     public double getPu_achat() {
         return pu_achat;
@@ -64,6 +82,16 @@ public class Carburant extends ClassMAPTable {
 
     public void setPu_achat(double pu_achat) {
         this.pu_achat = pu_achat;
+    }
+    public void setPu_achat(String pu) throws Exception{
+        if (pu.isEmpty()) {
+            throw new Exception("Aucune prix de achat n'a ete indiquer");
+        }
+        double pu_achat = Double.parseDouble(pu);
+        if (pu_achat < 0) {
+            throw new Exception("Prix de achat negatif , veuillez entrez un montant valide >= 0");
+        }
+        setPu_achat(pu_achat);
     }
 
     public String getId_type_carburant() {
