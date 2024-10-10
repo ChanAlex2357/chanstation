@@ -7,13 +7,8 @@
     <jsp:include page='pages/elements/css.jsp'/>
 </head>
 <body>
-    <h3> PAGE CONTEXT : ${pageContext.request.contextPath}</h3>
-    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/gen-data">
-        Generer les donnees
-    </a>
-    </a>
 
-    
+
 
     <jsp:include page='pages/elements/js.jsp'/>
     <script src="${pageContext.request.contextPath}/apjplugins/champcalcul.js" defer></script>      
