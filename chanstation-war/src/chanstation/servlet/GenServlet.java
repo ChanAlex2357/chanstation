@@ -1,6 +1,7 @@
 package chanstation.servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +17,10 @@ public class GenServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final DataGenService data_gen = LocalEjbService.getDataGenService();
-        data_gen.generateTypeMouvement(null);
+        try {
+            data_gen.generateTypeMouvement(null);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
