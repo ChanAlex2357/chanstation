@@ -9,6 +9,9 @@ public class TypeCarburant extends ClassMAPTable {
     String dsce;
     String id_unite;
 
+    public TypeCarburant() {
+        setNomTable("TYPE_CARBURANT");
+    }
     @Override
     public String getAttributIDName() {
         return "id_type_carburant";

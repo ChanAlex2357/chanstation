@@ -13,6 +13,9 @@ public class MvtStock extends ClassMAPTable {
     String id_type_mvt;
     String id_cuve;
 
+    public MvtStock (){
+        setNomTable("MVT_STOCK");
+    }
     @Override
     public String getAttributIDName() {
         return "id_mvt_stock";

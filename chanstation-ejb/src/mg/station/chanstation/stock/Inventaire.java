@@ -9,7 +9,9 @@ public class Inventaire extends ClassMAPTable {
     double cmup;
     double montant;
     String id_cuve;
-
+    public Inventaire (){
+        setNomTable("INVENTAIRE");
+    }
     @Override
     public String getAttributIDName() {
         return "id_inventaire";

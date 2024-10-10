@@ -9,6 +9,8 @@ public class Equivalence extends ClassMAPTable {
     private double qte;
     private String id_cuve;
 
+    public Equivalence(){setNomTable("EQUIVALENCE");}
+
     @Override
     public String getAttributIDName() {
         return "id_equivalence";

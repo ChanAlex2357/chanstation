@@ -13,6 +13,9 @@ public class PrelevementPompe extends ClassMAPTable {
     String id_pompiste;
     String id_pompe;
 
+    public PrelevementPompe(){
+        setNomTable("PRELEVEMENT_POMPE");
+    }
     @Override
     public String getAttributIDName() {
         return "id_prelevement_pompe";

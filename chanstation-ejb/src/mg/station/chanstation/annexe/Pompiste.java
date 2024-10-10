@@ -6,6 +6,7 @@ import java.sql.Connection;
 public class Pompiste extends ClassMAPTable {
     String id_pompiste, nom;
 
+    public Pompiste(){setNomTable("POMPISTE");}
     @Override
     public String getAttributIDName() {
         return "id_pompiste";

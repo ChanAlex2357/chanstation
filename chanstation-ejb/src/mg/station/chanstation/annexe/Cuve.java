@@ -11,6 +11,7 @@ public class Cuve extends ClassMAPTable {
     double capacite;
     String id_carburant;
 
+    public Cuve(){setNomTable("CUVE");}
     @Override
     public String getAttributIDName() {
         return "id_cuve";

@@ -8,6 +8,10 @@ public class Unite extends ClassMAPTable{
     String id_unite;
     String val;
     String desce;
+
+    public Unite(){
+        setNomTable("UNITE");
+    }
     @Override
     public String getAttributIDName() {
         return "id_unite";

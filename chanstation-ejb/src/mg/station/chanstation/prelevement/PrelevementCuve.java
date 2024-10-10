@@ -11,6 +11,10 @@ public class PrelevementCuve extends ClassMAPTable {
     double qte;
     String id_cuve;
 
+    public PrelevementCuve(){
+        setNomTable("PRELEVEMENT_CUVE");
+    }
+
     @Override
     public String getAttributIDName() {
         return "id_prelevement_cuve";

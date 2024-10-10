@@ -8,7 +8,7 @@ public class TypeMvt extends ClassMAPTable {
     int valeur;
     String desce;
     public TypeMvt(){
-        this.setNomTable();
+        this.setNomTable("TYPE_MVT");
     }
     public TypeMvt(int valeur , String desce){
         setValeur(valeur);

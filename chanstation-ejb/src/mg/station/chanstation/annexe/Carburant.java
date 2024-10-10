@@ -8,6 +8,7 @@ public class Carburant extends ClassMAPTable {
     double pu_vente, pu_achat;
     String id_type_carburant;
 
+    public Carburant(){setNomTable("CARBURANT");}
     @Override
     public String getAttributIDName() {
         return "id_carburant";
