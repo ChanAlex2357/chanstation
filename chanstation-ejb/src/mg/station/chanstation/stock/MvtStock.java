@@ -25,7 +25,7 @@ public class MvtStock extends ClassMAPTable {
 
     @Override
     public void construirePK(Connection c) throws Exception {
-        this.preparePk("MS", "GET_SEQ_MVT_STOCK");
+        this.preparePk("MVTS", "GET_SEQ_MVT_STOCK");
         String pk = this.makePK(c);
         this.setId_mvt_stock(pk);
     }

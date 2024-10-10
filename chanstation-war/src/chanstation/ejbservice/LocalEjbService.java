@@ -10,7 +10,7 @@ public class LocalEjbService  {
     public static DataGenService getDataGenService(){
         try {
             Context c = new InitialContext();
-            return (DataGenService) c.lookup("java:global/chanstation-ejb/DataGenBean!mg.station.chanstation.data.DataGenService");
+            return (DataGenService) c.lookup("java:global/chanstation/DataGenBean!mg.station.chanstation.data.DataGenService");
         } catch (NamingException ne) {
             throw new RuntimeException(ne);
         }

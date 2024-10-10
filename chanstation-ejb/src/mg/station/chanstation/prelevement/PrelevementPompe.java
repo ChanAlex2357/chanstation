@@ -25,7 +25,7 @@ public class PrelevementPompe extends ClassMAPTable {
 
     @Override
     public void construirePK(Connection c) throws Exception {
-        this.preparePk("PRELEVPMP", "GET_SEQ_PRELEVEMENT_POMPE");
+        this.preparePk("PRELPMP", "GET_SEQ_PRELEVEMENT_POMPE");
         String pk = this.makePK(c);
         this.setId_prelevement_pompe(pk);
     }
