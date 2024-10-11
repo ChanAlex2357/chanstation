@@ -11,7 +11,6 @@ public class Main {
         DataGenBean dataGenBean = new DataGenBean();
         try {
             Connection conn = new UtilDB().GetConn();
-            
             dataGenBean.generateLocalData(null);
             
             // TypeMvt[] mvts = dataGenBean.generateTypeMouvement(null);

@@ -1,20 +1,32 @@
 package mg.station.chanstation.prelevement;
 
 import bean.ClassMAPTable;
+import mg.station.chanstation.utils.TimeUtils;
+import vente.Vente;
+
 import java.sql.Connection;
 import java.sql.Date;
 
 public class PrelevementPompe extends ClassMAPTable {
     String id_prelevement_pompe;
     Date daty;
-    Date heure;
+    String heure;
     double compteur;
     String id_prelevement_anterieure;
     String id_pompiste;
     String id_pompe;
-
+    private void setNomTable(){
+        this.setNomTable("PRELEVEMENT_POMPE");
+    }
     public PrelevementPompe(){
-        setNomTable("PRELEVEMENT_POMPE");
+        setNomTable();
+    }
+    public PrelevementPompe(String compteur , String daty , String heure , String pompe , String pompiste) throws Exception{
+        setCompteur(compteur);
+        setDaty(daty);
+        setHeure(heure);
+        setId_pompe(pompe);
+        setId_pompiste(pompiste);
     }
     @Override
     public String getAttributIDName() {
@@ -49,11 +61,15 @@ public class PrelevementPompe extends ClassMAPTable {
         this.daty = daty;
     }
 
-    public Date getHeure() {
+    public String getHeure() {
         return heure;
     }
 
-    public void setHeure(Date heure) {
+
+    public void setHeure(String heure)throws Exception{
+        if (heure.isEmpty() || heure == null){
+            throw new Exception("Choisissez une heure");
+        }
         this.heure = heure;
     }
 
@@ -63,6 +79,12 @@ public class PrelevementPompe extends ClassMAPTable {
 
     public void setCompteur(double compteur) {
         this.compteur = compteur;
+    }
+    public void setCompteur(String compteur) throws Exception{ 
+        if (compteur.isEmpty()){
+            throw new Exception("Il faut indiquer le nombre de compteur");
+        }
+        this.setCompteur( Double.parseDouble(compteur) );
     }
 
     public String getId_prelevement_anterieure() {
@@ -77,7 +99,10 @@ public class PrelevementPompe extends ClassMAPTable {
         return id_pompiste;
     }
 
-    public void setId_pompiste(String id_pompiste) {
+    public void setId_pompiste(String id_pompiste) throws Exception{
+        if (id_pompiste.isEmpty() || id_pompiste == null){
+            throw new Exception("Veuillez choisir un pompiste");
+        }
         this.id_pompiste = id_pompiste;
     }
 
@@ -85,7 +110,20 @@ public class PrelevementPompe extends ClassMAPTable {
         return id_pompe;
     }
 
-    public void setId_pompe(String id_pompe) {
+    public void setId_pompe(String id_pompe) throws Exception {
+        if (id_pompe.isEmpty() || id_pompe == null){
+            throw new Exception("Veuillez choisir une pompe");
+        }
         this.id_pompe = id_pompe;
+    }
+    public void setDaty(String daty) throws Exception{
+        if (daty.isEmpty() || daty == null){
+            throw new Exception("Veuillez choisir une date");
+        }
+        this.setDaty(TimeUtils.convertToSqlDate(daty,"eng"));
+    }
+
+    public Vente getVente(){
+        Vente vente = new Vente();
     }
 }

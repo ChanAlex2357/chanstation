@@ -32,7 +32,7 @@
                 <!-- Pompe -->
                 <div class="col-6 mb-3">
                     <label class="form-label" for="pompe_prelevement">Pompe</label>
-                    <select class="form-select" name="pompe" id="pompe_prelevement">
+                    <select class="form-control" name="pompe" id="pompe_prelevement">
                         <%
                             for(int i = 0 ; i < pompes.length ; i++) {
                         %>
@@ -47,7 +47,7 @@
                 <!-- Pompiste -->
                 <div class="col-6 mb-3">
                     <label class="form-label" for="pompiste_prelevement">Pompiste</label>
-                    <select class="form-select" name="pompiste" id="pompiste_prelevement">
+                    <select class="form-control" name="pompiste" id="pompiste_prelevement">
                         <%
                             for(int i = 0 ; i < pompistes.length ; i++) {
                         %>

@@ -11,9 +11,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar nav">
+        <nav class="navbar">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">ChanStation</a>
+                <a class="navbar-brand" href="${pageContext.request.contextPath}">ChanStation</a>
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a href="${pageContext.request.contextPath}/prelevementPompe" 

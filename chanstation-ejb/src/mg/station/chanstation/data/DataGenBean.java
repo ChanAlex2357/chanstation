@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import javax.ejb.Stateless;
 import mg.station.chanstation.annexe.Unite;
+import mg.station.chanstation.ejb.GalloisUtilDB;
 import bean.CGenUtil;
 import mg.station.chanstation.annexe.Carburant;
 import mg.station.chanstation.annexe.Cuve;
@@ -13,6 +14,8 @@ import mg.station.chanstation.annexe.Pompe;
 import mg.station.chanstation.annexe.Pompiste;
 import mg.station.chanstation.annexe.TypeCarburant;
 import mg.station.chanstation.stock.TypeMvt;
+import user.UserEJBBean;
+import user.UserEJBClient;
 import utilitaire.UtilDB;
 @Stateless
 public class DataGenBean implements DataGenService {
@@ -102,7 +105,6 @@ public class DataGenBean implements DataGenService {
         carburants = new Carburant[2];
         carburants[0] = createCarburant("SP95",null,  5900,4900,typeCarburant.getId_type_carburant(),conn);
         carburants[1] = createCarburant("SP98", null, 6000,5100,typeCarburant.getId_type_carburant(),conn);
-
         CGenUtil.save(carburants[0],conn);
         CGenUtil.save(carburants[1],conn);
         System.out.println(successfullmessage("Carburant"));
@@ -234,6 +236,7 @@ public Equivalence createEquivalence(double limit, double qte, String id_cuve, C
    
     @Override
     public void generateLocalData(Connection conn) throws SQLException  {
+        Connection gallois = new GalloisUtilDB().GetConn();
         if (conn == null) {
             conn = new UtilDB().GetConn();
         }
@@ -245,10 +248,17 @@ public Equivalence createEquivalence(double limit, double qte, String id_cuve, C
             Unite[] unite= generateUnite(conn);
             TypeCarburant[] typeCarburants = generateTypeCarburant(unite[0], conn);
             Carburant[] carburants = generateCarburant(typeCarburants[0], conn);
+
+            for (Carburant carburant : carburants) {
+                UserEJBBean ejbBean = new UserEJBBean();
+
+                ejbBean.activeUtilisateur("dg");
+                carburant.getProduitCorrespondante().viser( ejbBean, gallois);
+            }
             Cuve[] cuves = generateCuve(carburants, conn);
             generatePompe(cuves, conn);
             conn.commit();
-            generateEquivalence(cuves, conn);
+            // generateEquivalence(cuves, conn);
             conn.commit();
         } catch (Exception e) {
             conn.rollback();

@@ -7,12 +7,26 @@
     <jsp:include page='pages/elements/css.jsp'/>
 </head>
 <body>
-    <h3> PAGE CONTEXT : ${pageContext.request.contextPath}</h3>
-    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/gen-data">
-        Generer les donnees
-    </a>
-    <a href="${pageContext.request.contextPath}/prelevementPompe" class="btn bin-secondary">Prelevement Pompe</a>
-
+    <header>
+        <nav class="navbar nav">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">ChanStation</a>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="${pageContext.request.contextPath}/prelevementPompe" 
+                            class="nav-link">
+                            Prelevement Pompe
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/gen-data">
+                            Generer les donnees
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
     <h1>WELCOME TO THE CHANSTATION</h1>
 
     <jsp:include page='pages/elements/js.jsp'/>
