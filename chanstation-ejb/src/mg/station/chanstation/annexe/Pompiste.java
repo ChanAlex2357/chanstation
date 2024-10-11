@@ -1,7 +1,11 @@
 package mg.station.chanstation.annexe;
 
+import bean.CGenUtil;
 import bean.ClassMAPTable;
+import utilitaire.UtilDB;
+
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class Pompiste extends ClassMAPTable {
     String id_pompiste, nom;
@@ -39,4 +43,32 @@ public class Pompiste extends ClassMAPTable {
     public void setNom(String nom) {
         this.nom = nom;
     }
+
+    public static Pompiste getPompisteById(String id) throws SQLException {
+    Connection conn = new UtilDB().GetConn();
+    try {
+        return getPompisteById(id, conn);
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        conn.close();
+    }
+    return null;
+}
+
+public static Pompiste getPompisteById(String id, Connection conn) throws Exception {
+    if (conn == null) {
+        return getPompisteById(id);
+    }
+    Pompiste[] pompistes = new Pompiste[1];
+    pompistes[0] = new Pompiste();
+    pompistes[0].setId_pompiste(id);
+
+    pompistes = (Pompiste[]) CGenUtil.rechercher(pompistes[0], null, null, conn, "");
+    if (pompistes.length > 0) {
+        return pompistes[0];
+    }
+    return null;
+}
+
 }

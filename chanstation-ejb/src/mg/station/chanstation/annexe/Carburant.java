@@ -117,7 +117,33 @@ public class Carburant extends ClassMAPTable {
         }
         this.id_type_carburant = id_type_carburant;
     }
-
+    public static Carburant getCarburantById(String id) throws SQLException {
+        Connection conn = new UtilDB().GetConn();
+        try {
+            return getCarburantById(id, conn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            conn.close();
+        }
+        return null;
+    }
+    
+    public static Carburant getCarburantById(String id, Connection conn) throws Exception {
+        if (conn == null) {
+            return getCarburantById(id);
+        }
+        Carburant[] carburants = new Carburant[1];
+        carburants[0] = new Carburant();
+        carburants[0].setId_carburant(id);
+    
+        carburants = (Carburant[]) CGenUtil.rechercher(carburants[0], null, null, conn, "");
+        if (carburants.length > 0) {
+            return carburants[0];
+        }
+        return null;
+    }
+    
     /**
      * Recuperer le produit representant du carburant dans la centrale
      * @return
@@ -140,25 +166,10 @@ public class Carburant extends ClassMAPTable {
      * @throws Exception
      */
     public TypeCarburant getTypeCarburant(Connection conn) throws Exception{
-        if (conn == null) {
-            return getTypeCarburant();
-        }
-        TypeCarburant typeCarburant = new TypeCarburant();
-        typeCarburant.setId_type_carburant(getId_type_carburant());
-
-        return ((TypeCarburant[])CGenUtil.rechercher(typeCarburant,null,null,conn,""))[0];
+        return TypeCarburant.getTypeCarburantById(this.getId_type_carburant(), conn);
     }
     public TypeCarburant getTypeCarburant() throws Exception{
-        Connection conn = new UtilDB().GetConn();
-        try {
-            return getTypeCarburant(conn);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new Exception("Aucun type carburant correspondant n'a ete trouver", e);
-        }
-        finally{
-            conn.close();
-        }
+        return getTypeCarburant(null);
     }
     /**
      * Enregistre l'instance du carburant dans la base de donner et son correspondance dans la centrale
@@ -199,6 +210,4 @@ public class Carburant extends ClassMAPTable {
         // Enregisrer le produit correspondant
         produit.createObject("1060", gallois);
     }
-
-    
 }

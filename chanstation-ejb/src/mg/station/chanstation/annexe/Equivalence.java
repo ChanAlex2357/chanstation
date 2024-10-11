@@ -60,4 +60,14 @@ public class Equivalence extends ClassMAPTable {
     public void setId_cuve(String id_cuve) {
         this.id_cuve = id_cuve;
     }
+
+    public Cuve getCuve() throws Exception {
+        return getCuve(null);
+    }
+    public Cuve getCuve(Connection connection) throws Exception {
+        if (this.getId_cuve() == null) {
+            return null;
+        }
+        return Cuve.getCuveById(getId_cuve(), connection);
+    }
 }

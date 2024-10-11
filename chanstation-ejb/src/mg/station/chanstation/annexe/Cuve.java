@@ -5,6 +5,7 @@ import bean.ClassMAPTable;
 import utilitaire.UtilDB;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 public class Cuve extends ClassMAPTable {
     String id_cuve, nom;
     double capacite;
@@ -64,8 +65,38 @@ public class Cuve extends ClassMAPTable {
     }
 
 
-    public Carburant getCarburantDetails(Connection c) throws Exception {
-        if (c == null) c=new UtilDB().GetConn();
-        return ((Carburant[]) CGenUtil.rechercher(new Carburant(),null,null," and id_carburant = '"+this.getId_carburant()+"'"))[0];
+    public Carburant getCarburant(Connection c) throws Exception {
+        if (this.getId_carburant() == null) {
+            return null;
+        }
+        return Carburant.getCarburantById(this.getId_carburant(), c);
     }
+
+    public static Cuve getCuveById(String id) throws SQLException {
+        Connection conn = new UtilDB().GetConn();
+        try {
+            return getCuveById(id, conn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            conn.close();
+        }
+        return null;
+    }
+
+    public static Cuve getCuveById(String id, Connection conn) throws Exception {
+        if (conn == null) {
+            return getCuveById(id);
+        }
+        Cuve[] cuve = new Cuve[1];
+        cuve[0] = new Cuve();
+        cuve[0].setId_cuve(id);
+
+        cuve = (Cuve[]) CGenUtil.rechercher(cuve[0], null, null, conn, "");
+        if (cuve.length > 0) {
+            return cuve[0];
+        }
+        return null;
+    }
+
 }

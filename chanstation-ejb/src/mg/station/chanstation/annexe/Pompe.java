@@ -2,7 +2,10 @@ package mg.station.chanstation.annexe;
 
 import bean.CGenUtil;
 import bean.ClassMAPTable;
+import utilitaire.UtilDB;
+
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class Pompe extends ClassMAPTable {
     String id_pompe, nom;
@@ -51,12 +54,41 @@ public class Pompe extends ClassMAPTable {
     public Pompe() {
         this.setNomTable("POMPE");
     }
-    public Cuve getCuveByIdPompe(String idPompe,Connection connection) throws Exception {
-        if (idPompe == null || idPompe.equals("")) idPompe = this.getId_pompe();//
-        //Alaina aloha ilay pompe e dia avoay ny idCuve!!!!
-        Pompe pompe = ((Pompe[]) CGenUtil.rechercher(new Pompe(),null,null,connection," and id_pompe ='"+idPompe+"'"))[0];
-        //izay voa manao hoe id_cuve=...
-        System.out.println("POMPE ID:"+pompe.getId_cuve());
-        return ((Cuve[]) CGenUtil.rechercher(new Cuve(),null,null,connection," and id_cuve='"+pompe.getId_cuve()+"'"))[0];
+    public Cuve getCuve() throws Exception {
+        return getCuve(null);
     }
+    public Cuve getCuve(Connection connection) throws Exception {
+        if (this.getId_cuve() == null) {
+            return null;
+        }
+        return Cuve.getCuveById(getId_cuve(), connection);
+    }
+
+    public static Pompe getPompeById(String id) throws SQLException {
+        Connection conn = new UtilDB().GetConn();
+        try {
+            return getPompeById(id, conn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            conn.close();
+        }
+        return null;
+    }
+
+    public static Pompe getPompeById(String id, Connection conn) throws Exception {
+        if (conn == null) {
+            return getPompeById(id);
+        }
+        Pompe[] pompe = new Pompe[1];
+        pompe[0] = new Pompe();
+        pompe[0].setId_pompe(id);
+
+        pompe = (Pompe[]) CGenUtil.rechercher(pompe[0], null, null, conn, "");
+        if (pompe.length > 0) {
+            return pompe[0];
+        }
+        return null;
+    }
+
 }

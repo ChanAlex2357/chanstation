@@ -1,7 +1,11 @@
 package mg.station.chanstation.annexe;
 
+import bean.CGenUtil;
 import bean.ClassMAPTable;
+import utilitaire.UtilDB;
+
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class TypeCarburant extends ClassMAPTable {
     String id_type_carburant;
@@ -59,5 +63,30 @@ public class TypeCarburant extends ClassMAPTable {
     public void setId_unite(String id_unite) {
         this.id_unite = id_unite;
     }
-    
+    public static TypeCarburant getTypeCarburantById(String id) throws SQLException{
+        Connection conn = new UtilDB().GetConn();
+        try {
+            return getTypeCarburantById(id,conn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally{
+            conn.close();
+        }
+        return null;
+    }
+    public static TypeCarburant getTypeCarburantById(String id , Connection conn) throws Exception{
+        if (conn == null) {
+            return getTypeCarburantById(id);
+        }
+        TypeCarburant[] typeCarburant = new TypeCarburant[1];
+        typeCarburant[0] = new TypeCarburant();
+        typeCarburant[0].setId_type_carburant(id);
+
+        typeCarburant = ((TypeCarburant[])CGenUtil.rechercher(typeCarburant[0],null,null,conn,""));
+        if (typeCarburant.length > 0) {
+            return typeCarburant[0];
+        }
+        return null;
+    }
 }

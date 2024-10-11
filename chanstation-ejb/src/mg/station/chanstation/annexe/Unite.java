@@ -1,8 +1,11 @@
 package mg.station.chanstation.annexe;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
+import bean.CGenUtil;
 import bean.ClassMAPTable;
+import utilitaire.UtilDB;
 
 public class Unite extends ClassMAPTable{
     String id_unite;
@@ -44,5 +47,31 @@ public class Unite extends ClassMAPTable{
     public void setDesce(String desce) {
         this.desce = desce;
     }
-    
+    public static Unite getUniteById(String id) throws SQLException {
+    Connection conn = new UtilDB().GetConn();
+    try {
+        return getUniteById(id, conn);
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        conn.close();
+    }
+    return null;
 }
+
+public static Unite getUniteById(String id, Connection conn) throws Exception {
+    if (conn == null) {
+        return getUniteById(id);
+    }
+    Unite[] unites = new Unite[1];
+    unites[0] = new Unite();
+    unites[0].setId_unite(id);
+
+    unites = (Unite[]) CGenUtil.rechercher(unites[0], null, null, conn, "");
+    if (unites.length > 0) {
+        return unites[0];
+    }
+    return null;
+}
+
+}   

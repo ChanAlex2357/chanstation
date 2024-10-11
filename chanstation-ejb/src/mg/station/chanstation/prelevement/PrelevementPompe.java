@@ -2,6 +2,8 @@ package mg.station.chanstation.prelevement;
 
 import bean.CGenUtil;
 import bean.ClassMAPTable;
+import mg.station.chanstation.annexe.Pompe;
+import mg.station.chanstation.annexe.Pompiste;
 import mg.station.chanstation.utils.TimeUtils;
 import utilitaire.UtilDB;
 
@@ -132,6 +134,52 @@ public class PrelevementPompe extends ClassMAPTable {
             throw new Exception("Veuillez choisir une date");
         }
         this.setDaty(TimeUtils.convertToSqlDate(daty,"eng"));
+    }
+    public Pompe getPompe() throws Exception{
+        return this.getPompe(null);
+    }
+    public Pompe getPompe( Connection conn) throws Exception{
+        if (this.getId_pompe() == null) {
+            return null;
+        }
+        return Pompe.getPompeById(id_pompe, conn);
+    }
+
+    public Pompiste getPompiste() throws Exception{
+        return this.getPompiste(null);
+    }
+    public Pompiste getPompiste( Connection conn) throws Exception{
+        if (this.getId_pompiste() == null) {
+            return null;
+        }
+        return Pompiste.getPompisteById(id_pompe, conn);
+    }
+
+    public static PrelevementPompe getPrelevementById(String id) throws SQLException{
+        PrelevementPompe prelevement = null;
+        Connection conn = new UtilDB().GetConn();
+        try {
+            prelevement = getPrelevementById(id,conn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            conn.close();
+        }
+        return prelevement;
+    }
+    public static PrelevementPompe getPrelevementById(String id ,Connection conn) throws Exception{
+        if (conn == null) {
+            return getPrelevementById(id);
+        }
+        PrelevementPompe[] prelevements = new PrelevementPompe[1];
+        prelevements[0] = new PrelevementPompe();
+        prelevements[0].setId_prelevement_pompe(id);
+        prelevements = ((PrelevementPompe[]) CGenUtil.rechercher(prelevements[0] , null , null , conn , ""));
+        if (prelevements.length > 0) {
+            return prelevements[0];
+        }
+        return null;
     }
     /**
      * Recuperer l'instance du prelevement anterieure correspondant a l'id prelevement anterieure
