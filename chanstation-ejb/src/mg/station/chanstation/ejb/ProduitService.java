@@ -1,13 +1,14 @@
 package mg.station.chanstation.ejb;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import annexe.Produit;
 import bean.CGenUtil;
 import mg.station.chanstation.annexe.Carburant;
 
 public class ProduitService {
-    public static Produit getProduitBdCarburant( Carburant carburant) {
+    public static Produit getProduitBdCarburant( Carburant carburant) throws SQLException {
         Connection conn = new GalloisUtilDB().GetConn();
         Produit produit = null;
         try {
@@ -25,10 +26,13 @@ public class ProduitService {
 
     public static Produit getProduitByCarburant(Carburant carburant , Connection conn) throws Exception{
         Produit[] produits = ((Produit[])CGenUtil.rechercher( new Produit() , null , null , conn , " and id ='"+carburant.getId_carburant()+"'"));
-
         if (produits.length > 0) {
             return produits[0];
         }
+        return null;
+    }
+
+    public static Produit createProduitByCarburant(Carburant carburant){
         Produit produit = new Produit();
         produit.setId( carburant.getId_carburant());
         produit.setVal(carburant.getNom());
@@ -38,5 +42,4 @@ public class ProduitService {
         return produit;
     }
 
-    public static Produit[] 
 }

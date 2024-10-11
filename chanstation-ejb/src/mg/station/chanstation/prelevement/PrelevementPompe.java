@@ -1,12 +1,13 @@
 package mg.station.chanstation.prelevement;
 
+import bean.CGenUtil;
 import bean.ClassMAPTable;
 import mg.station.chanstation.utils.TimeUtils;
-import vente.Vente;
+import utilitaire.UtilDB;
 
 import java.sql.Connection;
 import java.sql.Date;
-
+import java.sql.SQLException;
 public class PrelevementPompe extends ClassMAPTable {
     String id_prelevement_pompe;
     Date daty;
@@ -15,18 +16,23 @@ public class PrelevementPompe extends ClassMAPTable {
     String id_prelevement_anterieure;
     String id_pompiste;
     String id_pompe;
+    int     estvente;
+    
     private void setNomTable(){
         this.setNomTable("PRELEVEMENT_POMPE");
     }
     public PrelevementPompe(){
         setNomTable();
+        setEstvente(0);
     }
     public PrelevementPompe(String compteur , String daty , String heure , String pompe , String pompiste) throws Exception{
+        setNomTable();
         setCompteur(compteur);
         setDaty(daty);
         setHeure(heure);
         setId_pompe(pompe);
         setId_pompiste(pompiste);
+        setEstvente(0);
     }
     @Override
     public String getAttributIDName() {
@@ -60,7 +66,12 @@ public class PrelevementPompe extends ClassMAPTable {
     public void setDaty(Date daty) {
         this.daty = daty;
     }
-
+    public int getEstvente() {
+        return estvente;
+    }
+    public void setEstvente(int estvente) {
+        this.estvente = estvente;
+    }
     public String getHeure() {
         return heure;
     }
@@ -122,8 +133,57 @@ public class PrelevementPompe extends ClassMAPTable {
         }
         this.setDaty(TimeUtils.convertToSqlDate(daty,"eng"));
     }
-
-    public Vente getVente(){
-        Vente vente = new Vente();
+    /**
+     * Recuperer l'instance du prelevement anterieure correspondant a l'id prelevement anterieure
+     * @return
+     * @throws SQLException
+     */
+    public PrelevementPompe getPrelevementPompeAnterieure() throws SQLException{
+        PrelevementPompe prelevementanterieure = null;
+        Connection conn = new UtilDB().GetConn();
+        try {
+            prelevementanterieure = getPrelevementPompeAnterieure(conn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            conn.close();
+        }
+        return prelevementanterieure;
+    }
+    public PrelevementPompe getPrelevementPompeAnterieure(Connection conn) throws Exception{
+        if (this.getId_prelevement_anterieure() == null) {
+            return null;
+        }
+        // Creation de la reference pour la recherche dans la base
+        PrelevementPompe prelevementref = new PrelevementPompe();
+        prelevementref.setId_prelevement_anterieure(this.getId_prelevement_anterieure());
+        // Rechercher une correspondance
+        PrelevementPompe[] prelevementanterieur = ((PrelevementPompe[]) CGenUtil.rechercher(prelevementref , null , null , conn , ""));
+        if (prelevementanterieur.length > 0) {
+            return prelevementanterieur[0];
+        }
+        return null;
+    }
+    protected PrelevementPompe definePrelevementPompeAnterieure(){
+        // Recuperer la liste des prelevements correspondant au (pompe , pompise) ordonnee par daty
+        // Si c'est paire -> pas vente
+        // Si la taille du tableau est impaire -> Vente
+            // recuprer le premier prelevement de l'ordre du tableau
+            // definire la liaison entre le prelevement actuel et l'anterieure
+            // changer le status est vente
+            this.setEstvente(1);
+        return null;
+    }
+    public void viser( Connection conn){
+        // Recuperer l'id du prelevement anterieure
+        // Verifier si c'est une vente
+        // Enregistrer dans la base de donnee
+            // Construire la primary key si elle n'existe pas encore
+        // Si c'est une vente
+            // Generer une facture de vente
+            // Realiser le mouvement de stock
+            // Enregistrer la facture
+            // Enregistrer le mouvement
     }
 }
