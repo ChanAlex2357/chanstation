@@ -4,7 +4,7 @@ import java.sql.Connection;
 import bean.ClassMAPTable;
 
 public class Equivalence extends ClassMAPTable {
-    private int id_equivalence;
+    private String id_equivalence;
     private double limit;
     private double qte;
     private String id_cuve;
@@ -18,22 +18,22 @@ public class Equivalence extends ClassMAPTable {
 
     @Override
     public String getTuppleID() {
-        return String.valueOf(id_equivalence);
+        return id_equivalence;
     }
 
     @Override
     public void construirePK(Connection c) throws Exception {
         this.preparePk("EQ", "GET_SEQ_EQUIVALENCE");
         String pk = this.makePK(c);
-        this.setId_equivalence(Integer.parseInt(pk));
+        this.setId_equivalence(pk);
     }
 
     // Getters and Setters
-    public int getId_equivalence() {
+    public String getId_equivalence() {
         return id_equivalence;
     }
 
-    public void setId_equivalence(int id_equivalence) {
+    public void setId_equivalence(String id_equivalence) {
         this.id_equivalence = id_equivalence;
     }
 

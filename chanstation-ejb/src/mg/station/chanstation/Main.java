@@ -13,6 +13,7 @@ public class Main {
             Connection conn = new UtilDB().GetConn();
             
             dataGenBean.generateLocalData(null);
+            
             // TypeMvt[] mvts = dataGenBean.generateTypeMouvement(null);
         } catch (Exception e) {
             System.out.println(" ERROR ON EXECUTING GENERATION DATA");

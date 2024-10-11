@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import javax.ejb.Stateless;
 import mg.station.chanstation.annexe.Unite;
 import bean.CGenUtil;
-import bean.ClassMAPTable;
 import mg.station.chanstation.annexe.Carburant;
 import mg.station.chanstation.annexe.Cuve;
 import mg.station.chanstation.annexe.Equivalence;
@@ -248,10 +247,12 @@ public Equivalence createEquivalence(double limit, double qte, String id_cuve, C
             Carburant[] carburants = generateCarburant(typeCarburants[0], conn);
             Cuve[] cuves = generateCuve(carburants, conn);
             generatePompe(cuves, conn);
+            conn.commit();
             generateEquivalence(cuves, conn);
             conn.commit();
         } catch (Exception e) {
             conn.rollback();
+            e.printStackTrace();
         }
         finally{
             conn.close();

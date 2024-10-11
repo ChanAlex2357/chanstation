@@ -79,7 +79,7 @@ CREATE TABLE inventaire(
 );
 
 CREATE TABLE equivalence(
-   id_equivalence NUMBER(10),
+   id_equivalence VARCHAR(255) ,
    limit NUMBER(15,2)   NOT NULL,
    qte NUMBER(15,2)   NOT NULL,
    id_cuve VARCHAR(255)  NOT NULL,
