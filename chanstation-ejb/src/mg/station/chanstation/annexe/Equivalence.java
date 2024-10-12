@@ -1,9 +1,9 @@
 package mg.station.chanstation.annexe;
 
 import java.sql.Connection;
-import bean.ClassMAPTable;
+import mg.station.chanstation.bean.MaClassMAPTable;
 
-public class Equivalence extends ClassMAPTable {
+public class Equivalence extends MaClassMAPTable {
     private String id_equivalence;
     private double limit;
     private double qte;

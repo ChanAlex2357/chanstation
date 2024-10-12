@@ -1,13 +1,13 @@
 package mg.station.chanstation.annexe;
 
 import bean.CGenUtil;
-import bean.ClassMAPTable;
+import mg.station.chanstation.bean.MaClassMAPTable;
 import utilitaire.UtilDB;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class TypeCarburant extends ClassMAPTable {
+public class TypeCarburant extends MaClassMAPTable {
     String id_type_carburant;
     String libelle;
     String dsce;

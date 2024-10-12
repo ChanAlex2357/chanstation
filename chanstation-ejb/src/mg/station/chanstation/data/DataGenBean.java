@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import javax.ejb.Stateless;
 import mg.station.chanstation.annexe.Unite;
-import mg.station.chanstation.ejb.GalloisUtilDB;
+import mg.station.chanstation.bean.MaClassMAPTable;
 import bean.CGenUtil;
 import mg.station.chanstation.annexe.Carburant;
 import mg.station.chanstation.annexe.Cuve;
@@ -15,7 +15,6 @@ import mg.station.chanstation.annexe.Pompiste;
 import mg.station.chanstation.annexe.TypeCarburant;
 import mg.station.chanstation.stock.TypeMvt;
 import user.UserEJBBean;
-import user.UserEJBClient;
 import utilitaire.UtilDB;
 @Stateless
 public class DataGenBean implements DataGenService {
@@ -31,9 +30,7 @@ public class DataGenBean implements DataGenService {
         }
         typeMvts  = new TypeMvt[2];
         typeMvts[0] = this.createTypeMouvement(1 , "Entree",conn);
-        typeMvts[1] = this.createTypeMouvement(-1 , "Sortie", conn);
-        CGenUtil.save(typeMvts[0], conn);
-        CGenUtil.save(typeMvts[1], conn);
+        MaClassMAPTable.createObjects(typeMvts, conn);
         System.out.println(
             successfullmessage("Types Mouvements")
         );
@@ -105,8 +102,10 @@ public class DataGenBean implements DataGenService {
         carburants = new Carburant[2];
         carburants[0] = createCarburant("SP95",null,  5900,4900,typeCarburant.getId_type_carburant(),conn);
         carburants[1] = createCarburant("SP98", null, 6000,5100,typeCarburant.getId_type_carburant(),conn);
-        CGenUtil.save(carburants[0],conn);
-        CGenUtil.save(carburants[1],conn);
+        
+
+        MaClassMAPTable.createObjects(carburants, conn);
+
         System.out.println(successfullmessage("Carburant"));
         return carburants;
     }
@@ -129,8 +128,8 @@ public Cuve[] generateCuve(Carburant[] carburant, Connection conn) throws Except
     cuves[0] = createCuve("Chanstation Cuve 1", 100000, carburant[0].getId_carburant(), conn);
     cuves[1] = createCuve("Chanstation Cuve 2", 100000, carburant[1].getId_carburant(), conn);
 
-    CGenUtil.save(cuves[0],conn);
-    CGenUtil.save(cuves[1],conn);
+    MaClassMAPTable.createObjects(cuves, conn);
+
     System.out.println(successfullmessage("Cuve"));
     return cuves;
 }
@@ -157,8 +156,8 @@ public Pompe[] generatePompe(Cuve[] cuve, Connection conn) throws Exception {
     pompes[0] = createPompe("Pompe 1", cuve[0].getId_cuve(), conn);
     pompes[1] = createPompe("Pompe 2", cuve[1].getId_cuve(), conn);
 
-    CGenUtil.save(pompes[0],conn);
-    CGenUtil.save(pompes[1],conn);
+    MaClassMAPTable.createObjects(pompes, conn);
+
     System.out.println(successfullmessage("Pompe"));
     return pompes;
 }
@@ -184,8 +183,8 @@ public Pompiste[] generatePompiste(Connection conn) throws Exception {
     pompistes[0] = createPompiste("John Doe", conn);
     pompistes[1] = createPompiste("Jane Smith", conn);
 
-    CGenUtil.save(pompistes[0],conn);
-    CGenUtil.save(pompistes[1],conn);
+    MaClassMAPTable.createObjects(pompistes, conn);
+
     System.out.println(successfullmessage("Pompiste"));
     return pompistes;
 }
@@ -214,12 +213,8 @@ public Equivalence[] generateEquivalence(Cuve[] cuve, Connection conn) throws Ex
     equivalences[4] = createEquivalence(3, 300, cuve[0].getId_cuve(), conn);
     equivalences[5] = createEquivalence(10, 900, cuve[1].getId_cuve(), conn);
 
-    CGenUtil.save(equivalences[0],conn);
-    CGenUtil.save(equivalences[1],conn);
-    CGenUtil.save(equivalences[2],conn);
-    CGenUtil.save(equivalences[3],conn);
-    CGenUtil.save(equivalences[4],conn);
-    CGenUtil.save(equivalences[5],conn);
+    MaClassMAPTable.createObjects(equivalences, conn);
+
     System.out.println(successfullmessage("Equivalence"));
     return equivalences;
 }
@@ -236,7 +231,6 @@ public Equivalence createEquivalence(double limit, double qte, String id_cuve, C
    
     @Override
     public void generateLocalData(Connection conn) throws SQLException  {
-        Connection gallois = new GalloisUtilDB().GetConn();
         if (conn == null) {
             conn = new UtilDB().GetConn();
         }
@@ -248,17 +242,9 @@ public Equivalence createEquivalence(double limit, double qte, String id_cuve, C
             Unite[] unite= generateUnite(conn);
             TypeCarburant[] typeCarburants = generateTypeCarburant(unite[0], conn);
             Carburant[] carburants = generateCarburant(typeCarburants[0], conn);
-
-            for (Carburant carburant : carburants) {
-                UserEJBBean ejbBean = new UserEJBBean();
-
-                ejbBean.activeUtilisateur("dg");
-                carburant.getProduitCorrespondante().viser( ejbBean, gallois);
-            }
             Cuve[] cuves = generateCuve(carburants, conn);
             generatePompe(cuves, conn);
-            conn.commit();
-            // generateEquivalence(cuves, conn);
+            generateEquivalence(cuves, conn);
             conn.commit();
         } catch (Exception e) {
             conn.rollback();

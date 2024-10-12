@@ -1,13 +1,13 @@
 package mg.station.chanstation.annexe;
 
 import bean.CGenUtil;
-import bean.ClassMAPTable;
+import mg.station.chanstation.bean.MaClassMAPTable;
 import utilitaire.UtilDB;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class Pompe extends ClassMAPTable {
+public class Pompe extends MaClassMAPTable {
     String id_pompe, nom;
     String id_cuve;
     

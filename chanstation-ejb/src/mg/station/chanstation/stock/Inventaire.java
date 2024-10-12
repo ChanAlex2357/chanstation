@@ -1,9 +1,9 @@
 package mg.station.chanstation.stock;
 
-import bean.ClassMAPTable;
+import mg.station.chanstation.bean.MaClassMAPTable;
 import java.sql.Connection;
 
-public class Inventaire extends ClassMAPTable {
+public class Inventaire extends MaClassMAPTable {
     String id_inventaire;
     double quantite;
     double cmup;

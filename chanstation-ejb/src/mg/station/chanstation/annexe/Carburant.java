@@ -1,10 +1,9 @@
 package mg.station.chanstation.annexe;
 
 import bean.CGenUtil;
-import bean.ClassMAPTable;
+import mg.station.chanstation.bean.MaClassMAPTable;
+import mg.station.chanstation.bean.MaClassMAPTable;
 import mg.station.chanstation.data.ChanstationConstante;
-import mg.station.chanstation.ejb.GalloisUtilDB;
-import mg.station.chanstation.ejb.ProduitService;
 import utilitaire.UtilDB;
 
 import java.sql.Connection;
@@ -12,7 +11,7 @@ import java.sql.SQLException;
 
 import annexe.Produit;
 
-public class Carburant extends ClassMAPTable {
+public class Carburant extends MaClassMAPTable {
     String id_carburant, nom, desce;
     double pu_vente, pu_achat;
     String id_type_carburant;
@@ -143,22 +142,6 @@ public class Carburant extends ClassMAPTable {
         }
         return null;
     }
-    
-    /**
-     * Recuperer le produit representant du carburant dans la centrale
-     * @return
-     * @throws Exception
-     */
-    public Produit getProduitCorrespondante() throws Exception{
-        return ProduitService.getProduitBdCarburant(this);
-    }
-    public Produit getProduitCorrespondante(Connection conn) throws Exception{
-        if (conn == null) {
-            return getProduitCorrespondante();    
-        }
-        return ProduitService.getProduitByCarburant(this, conn);
-    }
-
     /**
      * Recupere l'instance du Type de carburant 
      * @param conn
@@ -170,44 +153,5 @@ public class Carburant extends ClassMAPTable {
     }
     public TypeCarburant getTypeCarburant() throws Exception{
         return getTypeCarburant(null);
-    }
-    /**
-     * Enregistre l'instance du carburant dans la base de donner et son correspondance dans la centrale
-     * @throws SQLException
-     */
-    public void viser() throws SQLException{
-        Connection conn = new UtilDB().GetConn();
-        Connection gallois = new GalloisUtilDB().GetConn();
-        try {
-            conn.setAutoCommit(false);
-            gallois.setAutoCommit(false);
-            viser(conn, gallois);
-            conn.commit();
-            gallois.commit();
-        } catch (Exception e) {
-            conn.rollback();
-            gallois.rollback();
-            e.printStackTrace();
-        }
-        finally {
-            conn.close();
-            gallois.close();
-        }
-    }
-    public void viser(Connection conn , Connection gallois) throws Exception {
-        // Ne faire aucune action l'une des deux connexion est vide
-        if (conn == null || gallois == null) {
-            viser();
-        }
-        // Verification de l'existance de l'id du carburant
-        if (getId_carburant() == null) {
-            this.construirePK(conn);
-        }
-        // Cree le produit a partir du carburant
-        Produit produit = ProduitService.createProduitByCarburant(this);
-        // Enregistrer le carburant dans la base perso
-        CGenUtil.save(this, conn);
-        // Enregisrer le produit correspondant
-        produit.createObject("1060", gallois);
     }
 }

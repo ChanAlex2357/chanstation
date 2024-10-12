@@ -1,10 +1,10 @@
 package mg.station.chanstation.prelevement;
 
-import bean.ClassMAPTable;
+import mg.station.chanstation.bean.MaClassMAPTable;
 import java.sql.Connection;
 import java.sql.Date;
 
-public class PrelevementCuve extends ClassMAPTable {
+public class PrelevementCuve extends MaClassMAPTable {
     String id_prelevement_cuve;
     Date daty;
     double limit;

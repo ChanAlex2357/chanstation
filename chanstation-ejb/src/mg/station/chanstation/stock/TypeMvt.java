@@ -1,11 +1,11 @@
 package mg.station.chanstation.stock;
 
-import bean.ClassMAPTable;
+import mg.station.chanstation.bean.MaClassMAPTable;
+
+
 import java.sql.Connection;
 
-import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
-
-public class TypeMvt extends ClassMAPTable {
+public class TypeMvt extends MaClassMAPTable {
     String id_type_mvt;
     int valeur;
     String desce;

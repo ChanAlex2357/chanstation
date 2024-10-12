@@ -4,10 +4,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import bean.CGenUtil;
-import bean.ClassMAPTable;
+import mg.station.chanstation.bean.MaClassMAPTable;
 import utilitaire.UtilDB;
 
-public class Unite extends ClassMAPTable{
+public class Unite extends MaClassMAPTable{
     String id_unite;
     String val;
     String desce;

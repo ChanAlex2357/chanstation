@@ -1,10 +1,10 @@
 package mg.station.chanstation.stock;
 
-import bean.ClassMAPTable;
+import mg.station.chanstation.bean.MaClassMAPTable;
 import java.sql.Connection;
 import java.sql.Date;
 
-public class MvtStock extends ClassMAPTable {
+public class MvtStock extends MaClassMAPTable {
     String id_mvt_stock;
     Date daty;
     double quantite;

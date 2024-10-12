@@ -1,23 +1,25 @@
 package mg.station.chanstation.prelevement;
 
 import bean.CGenUtil;
-import bean.ClassMAPTable;
+import mg.station.chanstation.bean.MaClassMAPTable;
 import mg.station.chanstation.annexe.Pompe;
 import mg.station.chanstation.annexe.Pompiste;
 import mg.station.chanstation.utils.TimeUtils;
+import prelevement.Prelevement;
+import prelevement.PrelevementCpl;
 import utilitaire.UtilDB;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
-public class PrelevementPompe extends ClassMAPTable {
-    String id_prelevement_pompe;
-    Date daty;
-    String heure;
-    double compteur;
-    String id_prelevement_anterieure;
-    String id_pompiste;
-    String id_pompe;
+public class PrelevementPompe extends MaClassMAPTable {
+    String  id_prelevement_pompe;
+    Date    daty;
+    String  heure;
+    double  compteur;
+    String  id_prelevement_anterieure;
+    String  id_pompiste;
+    String  id_pompe;
     int     estvente;
     
     private void setNomTable(){
@@ -223,7 +225,15 @@ public class PrelevementPompe extends ClassMAPTable {
             this.setEstvente(1);
         return null;
     }
-    public void viser( Connection conn){
+
+    public Prelevement genererPrelevemet(){
+        return null;
+    }
+
+
+    @Override
+    public PrelevementPompe createObject(Connection c) throws Exception {
+        
         // Recuperer l'id du prelevement anterieure
         // Verifier si c'est une vente
         // Enregistrer dans la base de donnee
@@ -233,5 +243,7 @@ public class PrelevementPompe extends ClassMAPTable {
             // Realiser le mouvement de stock
             // Enregistrer la facture
             // Enregistrer le mouvement
+
+        return ( PrelevementPompe) super.createObject(c);
     }
 }
