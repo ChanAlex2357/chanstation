@@ -70,4 +70,9 @@ public class Equivalence extends MaClassMAPTable {
         }
         return Cuve.getCuveById(getId_cuve(), connection);
     }
+
+    @Override
+    public MaClassMAPTable createObject(Connection localconn, Connection remoteconn) throws Exception {
+        return this.createObject(remoteconn);
+    }
 }

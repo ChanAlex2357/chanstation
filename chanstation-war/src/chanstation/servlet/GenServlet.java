@@ -17,6 +17,8 @@ public class GenServlet extends HttpServlet {
         final DataGenService data_gen = LocalEjbService.getDataGenService();
         try {
             data_gen.generateLocalData(null);
+
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

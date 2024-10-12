@@ -1,7 +1,10 @@
 package mg.station.chanstation.annexe;
 
 import bean.CGenUtil;
+import magasin.Magasin;
+import magasin.MagasinReservoir;
 import mg.station.chanstation.bean.MaClassMAPTable;
+import mg.station.chanstation.ejbclient.CentralEJBClient;
 import utilitaire.UtilDB;
 
 import java.sql.Connection;
@@ -98,5 +101,36 @@ public class Cuve extends MaClassMAPTable {
         }
         return null;
     }
+    public Magasin genererMagasin(Connection conn) throws Exception{
+        // Creation de l'instance du magasin
+        Magasin magasin = new MagasinReservoir();
+        magasin.setId(this.getId_carburant());
+        magasin.setVal(this.getNom()+" de Chanstation");
+        magasin.setDesce("Une cuve de carburant");
+        // Persistance du magasin
+        magasin = (Magasin)CentralEJBClient.getCentralEjb().createObject(magasin,conn);
+        // Tester la valider de la persistence
+        if (magasin == null) {
+            throw new Exception("Impossible d'enregistrer le magasin dans la centrale");
+        }
+        return magasin;
+    }
+    public Magasin genererMagasin() throws Exception{
+        Connection conn = new UtilDB().GetConn("gallois" , "gallois");
+        try {
+            return genererMagasin(conn);
+        } catch (Exception e) {
+            throw e;
+        }
+        finally {
+            conn.close();
+        }
+    }
 
+    @Override
+    public MaClassMAPTable createObject(Connection localconn, Connection remoteconn) throws Exception {
+        Cuve cuve = (Cuve)super.createObject(localconn);
+        genererMagasin(remoteconn);
+        return cuve;
+    }
 }

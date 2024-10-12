@@ -2,14 +2,10 @@ package mg.station.chanstation.annexe;
 
 import bean.CGenUtil;
 import mg.station.chanstation.bean.MaClassMAPTable;
-import mg.station.chanstation.bean.MaClassMAPTable;
-import mg.station.chanstation.data.ChanstationConstante;
 import utilitaire.UtilDB;
-
+import mg.station.chanstation.constant.ChanstationConstante;
 import java.sql.Connection;
 import java.sql.SQLException;
-
-import annexe.Produit;
 
 public class Carburant extends MaClassMAPTable {
     String id_carburant, nom, desce;
@@ -153,5 +149,9 @@ public class Carburant extends MaClassMAPTable {
     }
     public TypeCarburant getTypeCarburant() throws Exception{
         return getTypeCarburant(null);
+    }
+    @Override
+    public MaClassMAPTable createObject(Connection localconn, Connection remoteconn) throws Exception {
+        return this.createObject(remoteconn);
     }
 }

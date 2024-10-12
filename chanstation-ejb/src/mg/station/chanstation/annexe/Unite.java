@@ -73,5 +73,9 @@ public static Unite getUniteById(String id, Connection conn) throws Exception {
     }
     return null;
 }
+@Override
+public MaClassMAPTable createObject(Connection localconn, Connection remoteconn) throws Exception {
+   return this.createObject(remoteconn);
+}
 
 }   

@@ -91,4 +91,9 @@ public class Pompe extends MaClassMAPTable {
         return null;
     }
 
+    @Override
+    public MaClassMAPTable createObject(Connection localconn, Connection remoteconn) throws Exception {
+        return this.createObject(remoteconn);
+    }
+
 }
