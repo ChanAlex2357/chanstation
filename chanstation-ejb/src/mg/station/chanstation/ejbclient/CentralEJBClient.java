@@ -14,7 +14,6 @@ public class CentralEJBClient {
                 "CentralEJBService",
                 "ejbServer.CentralEJBService"
             );
-            System.out.println(name);
             return (CentralEjb)c.lookup( 
                 name
             );

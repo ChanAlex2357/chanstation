@@ -2,15 +2,19 @@ package mg.station.chanstation.prelevement;
 
 import bean.CGenUtil;
 import mg.station.chanstation.bean.MaClassMAPTable;
+import mg.station.chanstation.ejbclient.CentralEJBClient;
 import mg.station.chanstation.annexe.Pompe;
 import mg.station.chanstation.annexe.Pompiste;
 import mg.station.chanstation.utils.TimeUtils;
 import prelevement.Prelevement;
 import utilitaire.UtilDB;
+import vente.FactureCF;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
+
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 public class PrelevementPompe extends MaClassMAPTable {
     String  id_prelevement_pompe;
     Date    daty;
@@ -19,14 +23,11 @@ public class PrelevementPompe extends MaClassMAPTable {
     String  id_prelevement_anterieure;
     String  id_pompiste;
     String  id_pompe;
-    int     estvente;
-    
     private void setNomTable(){
         this.setNomTable("PRELEVEMENT_POMPE");
     }
     public PrelevementPompe(){
         setNomTable();
-        setEstvente(0);
     }
     public PrelevementPompe(String compteur , String daty , String heure , String pompe , String pompiste) throws Exception{
         setNomTable();
@@ -35,7 +36,6 @@ public class PrelevementPompe extends MaClassMAPTable {
         setHeure(heure);
         setId_pompe(pompe);
         setId_pompiste(pompiste);
-        setEstvente(0);
     }
     @Override
     public String getAttributIDName() {
@@ -68,12 +68,6 @@ public class PrelevementPompe extends MaClassMAPTable {
 
     public void setDaty(Date daty) {
         this.daty = daty;
-    }
-    public int getEstvente() {
-        return estvente;
-    }
-    public void setEstvente(int estvente) {
-        this.estvente = estvente;
     }
     public String getHeure() {
         return heure;
@@ -214,35 +208,83 @@ public class PrelevementPompe extends MaClassMAPTable {
         }
         return null;
     }
-    protected PrelevementPompe definePrelevementPompeAnterieure(){
-        // Recuperer la liste des prelevements correspondant au (pompe , pompise) ordonnee par daty
-        // Si c'est paire -> pas vente
-        // Si la taille du tableau est impaire -> Vente
-            // recuprer le premier prelevement de l'ordre du tableau
-            // definire la liaison entre le prelevement actuel et l'anterieure
-            // changer le status est vente
-            this.setEstvente(1);
-        return null;
+    protected void definePrelevementPompeAnterieure(Connection conn) throws Exception{
+        // Recuperer la liste des prelevements correspondant au (pompe , pompiste) ordonnee par daty
+        PrelevementPompe[] prelevements = new PrelevementPompe[1];
+        prelevements  = (PrelevementPompe[])CGenUtil.rechercher(
+            prelevements[0],
+                "SELECT * " +
+                "FROM (" +
+                "    SELECT *" +
+                "    FROM prelevement" +
+                "    WHERE idPompe = '"+this.getId_pompe()+"'" +
+                "    ORDER BY daty DESC, heure DESC" +
+                ")" +
+                " WHERE ROWNUM = 1"
+            ,conn);
+        if (prelevements.length > 0 ) {
+            this.setId_prelevement_anterieure(prelevements[0].getId_prelevement_pompe());
+        }
     }
-
-    public Prelevement genererPrelevemet(){
-        return null;
+    public boolean isVente(Connection c) throws Exception {
+        return getPompeRowsById(c).length % 2 == 0 && getPompeRowsById(c).length != 0;
     }
-
-
+    protected PrelevementPompe[] getPompeRowsById(Connection connection) throws Exception {
+        PrelevementPompe[] prelevements = new PrelevementPompe[1];
+        prelevements[0].setId_pompe( this.getId_pompe() );
+        return (PrelevementPompe[]) CGenUtil.rechercher(new PrelevementPompe(), null,null,connection,"");
+    }
     @Override
     public PrelevementPompe createObject(Connection c) throws Exception {
-        
         // Recuperer l'id du prelevement anterieure
+        this.definePrelevementPompeAnterieure(c);
+        // Create l'objet dans la base 
+        super.createObject(c);
+        // Determiner vente ou non selon l'ordre dans la base
         // Verifier si c'est une vente
-        // Enregistrer dans la base de donnee
-            // Construire la primary key si elle n'existe pas encore
-        // Si c'est une vente
+        if (this.isVente(c)) {
             // Generer une facture de vente
             // Realiser le mouvement de stock
             // Enregistrer la facture
             // Enregistrer le mouvement
-
-        return ( PrelevementPompe) super.createObject(c);
+        }
+        return this;
+    }
+    @Override
+    public PrelevementPompe createObject(Connection localconn, Connection remoteconn) throws Exception {
+        // Persistence du prelevement local
+        this.createObject(localconn);
+        // Persistence du prelevement remote
+        this.genererPrelevementRemote(remoteconn);
+        return this;
+    }
+    /**
+     * Cree et faire la persistance d'un prelevement de la centrale a partir du prelevement locale
+     * @param remoteconn la connection a la base de donnee distante
+     * @return le prelevement generer
+     * @throws Exception 
+     */
+    public Prelevement genererPrelevementRemote(Connection remoteconn) throws Exception{
+        Prelevement prelevement = this.getPrelevementRemote();
+        return (Prelevement)CentralEJBClient.getCentralEjb().createObject(prelevement, remoteconn);
+    }
+    /**
+     * Creation d'un prelevement de la centrale en prenant comme modele le prelevement locale
+     * @return
+     */
+    public Prelevement getPrelevementRemote(){
+        return PrelevementPompe.getPrelevementRemote(this);
+    }
+    private static Prelevement getPrelevementRemote(PrelevementPompe prelevement) {
+        Prelevement prelevement1 = new prelevement.Prelevement();
+        prelevement1.setId(prelevement.getId_prelevement_pompe());
+        prelevement1.setCompteur(prelevement.getCompteur());
+        prelevement1.setDaty(prelevement.getDaty());
+        prelevement1.setDesignation("Prelevement du "+prelevement.getDaty().toString());
+        prelevement1.setIdPompe(prelevement.getId_pompe());
+        prelevement1.setIdPompiste(Integer.parseInt(prelevement.getId_pompiste()));
+        prelevement1.setHeure(prelevement.getHeure());
+        prelevement1.setIdPrelevementAnterieur(prelevement.getId_prelevement_anterieure());
+        return prelevement1;
     }
 }

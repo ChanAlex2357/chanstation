@@ -72,4 +72,10 @@ public class PrelevementCuve extends MaClassMAPTable {
     public void setId_cuve(String id_cuve) {
         this.id_cuve = id_cuve;
     }
+
+    @Override
+    public MaClassMAPTable createObject(Connection localconn, Connection remoteconn) throws Exception {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'createObject'");
+    }
 }

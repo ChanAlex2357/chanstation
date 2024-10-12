@@ -16,14 +16,14 @@ import mg.station.chanstation.stock.TypeMvt;
 @Local
 public interface DataGenService {
 
-    public TypeMvt[] generateTypeMouvement( Connection conn) throws Exception;
-    public Unite[] generateUnite( Connection conn) throws Exception;
-    public TypeCarburant[] generateTypeCarburant(Unite unite , Connection conn) throws Exception;
-    public Carburant[] generateCarburant( TypeCarburant typeCarburant,Connection conn) throws Exception;
-    public Cuve[] generateCuve(Carburant[] carburant , Connection conn)throws Exception;
-    public Pompe[] generatePompe(Cuve[] cuve, Connection conn) throws Exception;
-    public Pompiste[] generatePompiste(Connection conn) throws Exception;
-    public Equivalence[] generateEquivalence(Cuve cuve[] , Connection conn) throws Exception;
+    public TypeMvt[] generateTypeMouvement( Connection conn , Connection gallois) throws Exception;
+    public Unite[] generateUnite( Connection conn , Connection gallois) throws Exception;
+    public TypeCarburant[] generateTypeCarburant(Unite unite , Connection conn , Connection gallois) throws Exception;
+    public Carburant[] generateCarburant( TypeCarburant typeCarburant,Connection conn , Connection gallois) throws Exception;
+    public Cuve[] generateCuve(Carburant[] carburant , Connection conn , Connection gallois)throws Exception;
+    public Pompe[] generatePompe(Cuve[] cuve, Connection conn , Connection gallois) throws Exception;
+    public Pompiste[] generatePompiste(Connection conn , Connection gallois) throws Exception;
+    public Equivalence[] generateEquivalence(Cuve cuve[] , Connection conn , Connection gallois) throws Exception;
     public void generateLocalData( Connection conn) throws Exception;
 
 }

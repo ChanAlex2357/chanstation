@@ -109,3 +109,13 @@ CREATE TABLE mvt_stock(
    FOREIGN KEY(id_type_mvt) REFERENCES type_mvt(id_type_mvt),
    FOREIGN KEY(id_cuve) REFERENCES cuve(id_cuve)
 );
+
+CREATE TABLE factureclient(
+   id_factureclient VARCHAR(255) ,
+   pu NUMBER(15,2)   NOT NULL,
+   quantite NUMBER(15,2)   NOT NULL,
+   daty DATE NOT NULL,
+   id_prelevement_pompe VARCHAR(255)  NOT NULL,
+   PRIMARY KEY(id_factureclient),
+   FOREIGN KEY(id_prelevement_pompe) REFERENCES prelevement_pompe(id_prelevement_pompe)
+);

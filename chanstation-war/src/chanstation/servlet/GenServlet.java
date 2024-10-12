@@ -16,9 +16,7 @@ public class GenServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final DataGenService data_gen = LocalEjbService.getDataGenService();
         try {
-            data_gen.generateLocalData(null);
-
-            
+            data_gen.generateLocalData(null);            
         } catch (Exception e) {
             e.printStackTrace();
         }
