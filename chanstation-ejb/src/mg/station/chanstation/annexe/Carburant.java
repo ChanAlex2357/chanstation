@@ -1,11 +1,17 @@
 package mg.station.chanstation.annexe;
 
 import bean.CGenUtil;
+import ejbServer.CentralEjb;
 import mg.station.chanstation.bean.MaClassMAPTable;
 import utilitaire.UtilDB;
+import utils.ConstanteStation;
 import mg.station.chanstation.constant.ChanstationConstante;
+import mg.station.chanstation.ejbclient.CentralEJBClient;
+
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import annexe.Produit;
 
 public class Carburant extends MaClassMAPTable {
     String id_carburant, nom, desce;
@@ -151,7 +157,41 @@ public class Carburant extends MaClassMAPTable {
         return getTypeCarburant(null);
     }
     @Override
-    public MaClassMAPTable createObject(Connection localconn, Connection remoteconn) throws Exception {
-        return this.createObject(remoteconn);
+    public Carburant createObject(Connection localconn, Connection remoteconn) throws Exception {
+        this.createObject(localconn);
+        // this.genererProduit(localconn,remoteconn);
+        return this;
+    }
+
+    public Produit genererProduit(Connection remote)throws Exception {
+        return genererProduit(null, remote);
+    }
+    public Produit genererProduit(Connection local , Connection remote) throws Exception {
+        Produit produit = new Produit();
+        produit.setId(this.getId_carburant());
+        produit.setVal(this.getNom());
+        produit.setDesce(this.getDesce());
+        produit.setPuAchat(this.getPu_achat());
+        produit.setPuVente(this.getPu_vente());
+        produit.setIdUnite(this.getTypeCarburant(local).getId_unite());
+        produit.setIdTypeProduit(ConstanteStation.idTypeCarburant);
+        CentralEjb centralEjb = CentralEJBClient.getCentralEjb();
+        produit = (Produit)centralEjb.createObject(produit,remote);
+        // Tester la valider de la persistence
+        if (produit == null) {
+            throw new Exception("Impossible d'enregistrer le produit dans la centrale");
+        }
+        return produit;
+    }
+    public Produit genererProduit()throws Exception{
+        Connection conn = new UtilDB().GetConn("gallois" , "gallois");
+        try {
+            return genererProduit(conn);
+        } catch (Exception e) {
+            throw e;
+        }
+        finally {
+            conn.close();
+        }
     }
 }

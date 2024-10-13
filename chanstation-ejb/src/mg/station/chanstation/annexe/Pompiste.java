@@ -72,7 +72,7 @@ public static Pompiste getPompisteById(String id, Connection conn) throws Except
 }
 @Override
 public MaClassMAPTable createObject(Connection localconn, Connection remoteconn) throws Exception {
-    return this.createObject(remoteconn);
+    return this.createObject(localconn);
 }
 
 }

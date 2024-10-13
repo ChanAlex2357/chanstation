@@ -1,6 +1,7 @@
 package mg.station.chanstation.annexe;
 
 import bean.CGenUtil;
+import ejbServer.CentralEjb;
 import magasin.Magasin;
 import magasin.MagasinReservoir;
 import mg.station.chanstation.bean.MaClassMAPTable;
@@ -74,6 +75,9 @@ public class Cuve extends MaClassMAPTable {
         }
         return Carburant.getCarburantById(this.getId_carburant(), c);
     }
+    public Carburant getCarburant()throws Exception {
+        return this.getCarburant(null);
+    }
 
     public static Cuve getCuveById(String id) throws SQLException {
         Connection conn = new UtilDB().GetConn();
@@ -101,14 +105,19 @@ public class Cuve extends MaClassMAPTable {
         }
         return null;
     }
-    public Magasin genererMagasin(Connection conn) throws Exception{
+    public Magasin genererMagasin(Connection remote) throws Exception{
+        return genererMagasin(null, remote);
+    }
+    public Magasin genererMagasin(Connection local,Connection remote) throws Exception{
         // Creation de l'instance du magasin
         Magasin magasin = new MagasinReservoir();
-        magasin.setId(this.getId_carburant());
+        magasin.setId(this.getId_cuve());
         magasin.setVal(this.getNom()+" de Chanstation");
         magasin.setDesce("Une cuve de carburant");
+        magasin.setIdProduit("");
         // Persistance du magasin
-        magasin = (Magasin)CentralEJBClient.getCentralEjb().createObject(magasin,conn);
+        CentralEjb centralEjb = CentralEJBClient.getCentralEjb();
+        magasin = (Magasin)centralEjb.createObject(magasin,remote);
         // Tester la valider de la persistence
         if (magasin == null) {
             throw new Exception("Impossible d'enregistrer le magasin dans la centrale");
@@ -130,7 +139,7 @@ public class Cuve extends MaClassMAPTable {
     @Override
     public MaClassMAPTable createObject(Connection localconn, Connection remoteconn) throws Exception {
         Cuve cuve = (Cuve)super.createObject(localconn);
-        genererMagasin(remoteconn);
+        genererMagasin(localconn,remoteconn);
         return cuve;
     }
 }

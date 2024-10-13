@@ -72,7 +72,6 @@ public class TypeMvt extends MaClassMAPTable {
     }
     @Override
     public MaClassMAPTable createObject(Connection localconn, Connection remoteconn) throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createObject'");
+        return this.createObject(localconn);
     }
 }

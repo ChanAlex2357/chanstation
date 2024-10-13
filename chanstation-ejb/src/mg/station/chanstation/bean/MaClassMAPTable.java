@@ -11,6 +11,7 @@ public abstract class MaClassMAPTable extends ClassMAPTable{
         if (this.getTuppleID() == null || this.getTuppleID().compareToIgnoreCase("") == 0 || this.getTuppleID().compareToIgnoreCase("0") == 0) {
             this.construirePK(c);
         }
+        
         int result = this.insertToTable(c);
         if (result == 0) {
             return null;

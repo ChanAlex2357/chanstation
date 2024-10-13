@@ -30,6 +30,9 @@ public class PrelevementPompeServlet extends HttpServlet{
             PrelevementPompe prelevement = new PrelevementPompe(compteur, daty, heure, id_pompe, id_pompiste);
             // Persistence du prelevement
             LocalEjbService.getPrelevementSignature().persistPrelevementPompe(prelevement);
+
+            resp.sendRedirect("pages/template.jsp?but=prelevement/prelevement-pompe-form.jsp&title=Prelevement Pompe");
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

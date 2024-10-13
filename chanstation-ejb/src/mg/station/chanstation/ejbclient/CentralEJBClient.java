@@ -1,25 +1,25 @@
 package mg.station.chanstation.ejbclient;
 
+
+
+import javax.naming.Context;
 import javax.naming.InitialContext;
 
 import ejbServer.CentralEjb;
 import mg.station.chanstation.utils.EjbUtils;
 
 public class CentralEJBClient {
-    public static CentralEjb getCentralEjb(){
+    public static CentralEjb getCentralEjb() throws Exception{
         try {
-            InitialContext c = new InitialContext();
+            Context c = new InitialContext();
             String name = EjbUtils.getGlobalLookupName(
-                "station",
-                "CentralEJBService",
-                "ejbServer.CentralEJBService"
+                "chanstation",
+                "CentralEjbService",
+                "ejbServer.CentralEjb"
             );
-            return (CentralEjb)c.lookup( 
-                name
-            );
+            return (CentralEjb)c.lookup(name);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new Exception("Central EJB n'a pas pu etre instancier",e);
         }
-        return null;
     }
 }

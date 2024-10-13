@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import bean.CGenUtil;
+import ejbServer.CentralEjb;
 import mg.station.chanstation.bean.MaClassMAPTable;
+import mg.station.chanstation.ejbclient.CentralEJBClient;
 import utilitaire.UtilDB;
 
 public class Unite extends MaClassMAPTable{
@@ -26,7 +28,7 @@ public class Unite extends MaClassMAPTable{
 
     @Override
     public void construirePK(Connection c) throws Exception {
-        preparePk("UNI", "GET_SEQ_UNITE");
+        preparePk("UNICARB", "GET_SEQ_UNITE");
         setId_unite(makePK());
     }
     public String getId_unite() {
@@ -73,9 +75,37 @@ public static Unite getUniteById(String id, Connection conn) throws Exception {
     }
     return null;
 }
+public annexe.Unite genererUnite(Connection conn) throws Exception{
+        // Creation de l'instance du Unite
+        annexe.Unite unite = new annexe.Unite();
+        unite.setId(this.getId_unite());
+        unite.setVal(this.getVal());
+        unite.setDesce(this.getDesce());
+        // Persistance du Unite
+        CentralEjb centralEjb = CentralEJBClient.getCentralEjb();
+        unite = (annexe.Unite)centralEjb.createObject(unite,conn);
+        // Tester la valider de la persistence
+        if (unite == null) {
+            throw new Exception("Impossible d'enregistrer le unite dans la centrale");
+        }
+        return unite;
+    }
+    public annexe.Unite genererUnite() throws Exception{
+        Connection conn = new UtilDB().GetConn("gallois" , "gallois");
+        try {
+            return genererUnite(conn);
+        } catch (Exception e) {
+            throw e;
+        }
+        finally {
+            conn.close();
+        }
+    }
+
 @Override
 public MaClassMAPTable createObject(Connection localconn, Connection remoteconn) throws Exception {
-   return this.createObject(remoteconn);
+    this.createObject(localconn);
+    this.genererUnite(remoteconn);
+    return this;
 }
-
 }   
